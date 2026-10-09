@@ -9,7 +9,7 @@ description: Use when inspecting, troubleshooting, or changing Pure Storage Flas
 Reading is free; changing is gated. Every change above read-only is delivered as a **change plan** (references/change-gate.md) and executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit.
 
 ## Access model
-- **Reads:** Pure Fusion MCP server (read-only). Discover its tools at session start (ToolSearch "pure fusion"). Cite array and timestamp for every value. If MCP is missing or fails, say so and give the user read-only CLI/REST commands. Never guess state.
+- **Reads:** Pure Fusion MCP server (read-only). Discover its tools at session start (Claude Code: ToolSearch "pure fusion"; OpenCode and others: the pure-fusion tools in your tool list). Cite array and timestamp for every value. If MCP is missing or fails, say so and give the user read-only CLI/REST commands. Never guess state.
 - **Writes:** the change plan's command block, run by a human. Later write tools still go through the gate.
 
 ## Risk tiers

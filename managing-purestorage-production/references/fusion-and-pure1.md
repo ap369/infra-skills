@@ -18,7 +18,7 @@ claude mcp add pure-fusion -- /opt/pure/pure-fusion-mcp --config ~/.config/pure-
 ```
 
 ### Using it
-1. At session start, list the available `mcp__pure-fusion__*` tools (use ToolSearch, keyword "pure fusion"). Map them to the operations in SKILL.md: fleet status, array space, volumes, hosts and connections, pgroups, pods, alerts, performance.
+1. At session start, list the available `mcp__pure-fusion__*` tools (Claude Code: use ToolSearch, keyword "pure fusion"; OpenCode: tools are prefixed with the server name, e.g. `pure-fusion_*`). Map them to the operations in SKILL.md: fleet status, array space, volumes, hosts and connections, pgroups, pods, alerts, performance.
 2. Always say which array, and the time, each data point came from.
 3. If a tool fails or no tools are available, report it. Then give the equivalent read-only CLI or REST command for the user to run. **Never fill gaps with assumed values.**
 4. Even if a future version adds write tools, they are still subject to the change gate. A tool existing doesn't authorize using it.
