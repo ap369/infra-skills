@@ -13,6 +13,7 @@ Agent skills (Claude Code, OpenCode) for operating infrastructure in production.
 | `managing-netapp-production` | NetApp ONTAP (AFF/FAS/ASA), StorageGRID, BlueXP. Uses NetApp's ONTAP MCP server (`--read-only` recommended); every change, including MCP write tools, goes through a gated, approved change plan. |
 | `managing-powermax-production` | Dell PowerMax and VMAX (VMAX3, All Flash, 10K/20K/40K). Read-only symcli as a Monitor-role identity; every change goes through a gated, approved change plan. |
 | `managing-unity-vnx-production` | Dell Unity / Unity XT and VNX (block and file). Unity via a GET-only community MCP server plus uemcli; VNX via naviseccli and Control Station; every change goes through a gated, approved change plan. |
+| `managing-ecs-objectscale-production` | Dell ECS / ObjectScale object storage (S3). Read-only Management API (System Monitor) and config-only S3 reads, no secrets in transcripts; every change goes through a gated, approved change plan. |
 
 ## Install
 
@@ -30,6 +31,7 @@ ln -s ~/infra-skills/managing-purestorage-production ~/.claude/skills/managing-p
 ln -s ~/infra-skills/managing-netapp-production ~/.claude/skills/managing-netapp-production
 ln -s ~/infra-skills/managing-powermax-production ~/.claude/skills/managing-powermax-production
 ln -s ~/infra-skills/managing-unity-vnx-production ~/.claude/skills/managing-unity-vnx-production
+ln -s ~/infra-skills/managing-ecs-objectscale-production ~/.claude/skills/managing-ecs-objectscale-production
 ```
 
 ### OpenCode
@@ -42,6 +44,7 @@ ln -s ~/infra-skills/managing-purestorage-production ~/.config/opencode/skills/m
 ln -s ~/infra-skills/managing-netapp-production ~/.config/opencode/skills/managing-netapp-production
 ln -s ~/infra-skills/managing-powermax-production ~/.config/opencode/skills/managing-powermax-production
 ln -s ~/infra-skills/managing-unity-vnx-production ~/.config/opencode/skills/managing-unity-vnx-production
+ln -s ~/infra-skills/managing-ecs-objectscale-production ~/.config/opencode/skills/managing-ecs-objectscale-production
 ```
 
 Optional: control skill access in `opencode.json`:
@@ -127,3 +130,11 @@ There is no production-grade MCP server for PowerMax/VMAX. The agent runs read-o
 3. Save read-only `uemcli` credentials (`-saveUser`) for each array. For VNX, create a `naviseccli` security file for a read-only account.
 
 See `managing-unity-vnx-production/references/access-and-tools.md`.
+
+### Dell ECS / ObjectScale (no MCP)
+
+There is no MCP server for ECS. The agent reads through its shell:
+- **Management API** (port 4443), as a dedicated **System Monitor** user. Keep its password in a mode-600 file or a vault.
+- **`aws s3api get-*`**, with an `ecs-ro` profile that can only read bucket configuration.
+
+See `managing-ecs-objectscale-production/references/access-and-tools.md`.
