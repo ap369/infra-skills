@@ -1,6 +1,6 @@
 ---
 name: managing-powermax-production
-description: Use when inspecting, troubleshooting, or changing Dell PowerMax or VMAX (VMAX3, VMAX All Flash, VMAX 10K/20K/40K) arrays, especially production arrays with critical data - symcli, Solutions Enabler, Unisphere for PowerMax, storage groups, masking views, devices, SnapVX, SRDF, SRP capacity, latency.
+description: Use when inspecting, troubleshooting, or changing Dell PowerMax or VMAX (VMAX3, VMAX All Flash, VMAX 10K/20K/40K) arrays, especially production arrays with critical data - symcli, Solutions Enabler, Unisphere for PowerMax, storage groups, masking views, devices, SnapVX, SRDF, SRP capacity, latency, best practices, configuration audit.
 ---
 
 # Managing PowerMax / VMAX in Production
@@ -42,6 +42,7 @@ Reading is free; changing is gated. Every change above read-only is delivered as
 
 ## References
 - references/change-gate.md: plan template (REQUIRED for any change)
+- references/best-practices.md: recommended configuration, read-only audit checks and fix tiers (use for best-practice or config reviews)
 - references/powermax-vmax.md: objects, commands by tier, pre-checks, decommission, SRDF recovery
 - references/access-and-tools.md: read-only identity, symcli whitelist, REST, credentials
 - references/health-and-triage.md: health report, incident playbooks

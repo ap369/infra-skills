@@ -1,6 +1,6 @@
 ---
 name: managing-unity-vnx-production
-description: Use when inspecting, troubleshooting, or changing Dell Unity, Unity XT or VNX (VNX1/VNX2 block and file) arrays, especially production arrays with critical data - uemcli, naviseccli, Unisphere, pools, LUNs, storage groups, hosts, snapshots, trespass, SP ownership, NAS servers, Data Movers, replication, MirrorView, capacity.
+description: Use when inspecting, troubleshooting, or changing Dell Unity, Unity XT or VNX (VNX1/VNX2 block and file) arrays, especially production arrays with critical data - uemcli, naviseccli, Unisphere, pools, LUNs, storage groups, hosts, snapshots, trespass, SP ownership, NAS servers, Data Movers, replication, MirrorView, capacity, best practices, configuration audit.
 ---
 
 # Managing Unity / VNX in Production
@@ -43,6 +43,7 @@ Reading is free; changing is gated. Every change above read-only is delivered as
 
 ## References
 - references/change-gate.md: plan template (REQUIRED for any change)
+- references/best-practices.md: recommended configuration, read-only audit checks and fix tiers (use for best-practice or config reviews)
 - references/unity.md: Unity objects, commands by tier, pool-full relief
 - references/vnx.md: VNX block and file objects, commands by tier
 - references/access-and-tools.md: Unity MCP setup and risks, uemcli/naviseccli credentials

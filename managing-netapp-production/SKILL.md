@@ -1,6 +1,6 @@
 ---
 name: managing-netapp-production
-description: Use when inspecting, troubleshooting, or changing NetApp ONTAP (AFF, FAS, ASA), StorageGRID, BlueXP or Cloud Volumes ONTAP systems, especially production clusters with critical data - SVMs, volumes, aggregates, LUNs, igroups, NFS exports, CIFS shares, snapshots, SnapRestore, SnapMirror, FlexClone, capacity, latency, ransomware, ILM.
+description: Use when inspecting, troubleshooting, or changing NetApp ONTAP (AFF, FAS, ASA), StorageGRID, BlueXP or Cloud Volumes ONTAP systems, especially production clusters with critical data - SVMs, volumes, aggregates, LUNs, igroups, NFS exports, CIFS shares, snapshots, SnapRestore, SnapMirror, FlexClone, capacity, latency, ransomware, ILM, best practices, configuration audit.
 ---
 
 # Managing NetApp in Production
@@ -43,6 +43,7 @@ Reading is free; changing is gated. Every change above read-only is delivered as
 
 ## References
 - references/change-gate.md: plan template (REQUIRED for any change)
+- references/best-practices.md: recommended configuration, read-only audit checks and fix tiers (use for best-practice or config reviews)
 - references/ontap.md: objects, commands by tier, pre-checks, restore and DR-test patterns
 - references/storagegrid.md: tenants, buckets, ILM
 - references/ontap-mcp-and-bluexp.md: MCP setup, read-only mode, credentials, BlueXP, AIQUM

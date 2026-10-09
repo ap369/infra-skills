@@ -1,6 +1,6 @@
 ---
 name: managing-ibm-cos-production
-description: Use when inspecting, troubleshooting, or changing IBM Cloud Object Storage on-premises (Cleversafe, dsNet, ClevOS) systems, especially production systems with critical data - Manager, Accessers, Slicestors, device sets, storage pools, vaults, containers, IDA width and thresholds, firmware upgrades, drive failures, rebuilder, retention vaults, legal holds, access keys, S3.
+description: Use when inspecting, troubleshooting, or changing IBM Cloud Object Storage on-premises (Cleversafe, dsNet, ClevOS) systems, especially production systems with critical data - Manager, Accessers, Slicestors, device sets, storage pools, vaults, containers, IDA width and thresholds, firmware upgrades, drive failures, rebuilder, retention vaults, legal holds, access keys, S3, best practices, configuration audit.
 ---
 
 # Managing IBM COS (Cleversafe) in Production
@@ -44,6 +44,7 @@ Margin = available devices in the set − write threshold, for **every vault** o
 
 ## References
 - references/change-gate.md: plan template (REQUIRED for any change)
+- references/best-practices.md: recommended configuration, read-only audit checks and fix tiers (use for best-practice or config reviews)
 - references/ibm-cos.md: IDA math, objects, tiers, rolling maintenance, retention/GDPR
 - references/access-and-tools.md: Read Only identities, Manager API, secrets
 - references/health-and-triage.md: health report, incident playbooks

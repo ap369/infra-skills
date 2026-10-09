@@ -1,6 +1,6 @@
 ---
 name: managing-purestorage-production
-description: Use when inspecting, troubleshooting, or changing Pure Storage FlashArray, FlashBlade, Pure1 or Pure Fusion systems, especially production arrays with critical data - volumes, hosts, LUNs, snapshots, protection groups, pods, ActiveCluster, file systems, buckets, capacity, latency, replication, eradication.
+description: Use when inspecting, troubleshooting, or changing Pure Storage FlashArray, FlashBlade, Pure1 or Pure Fusion systems, especially production arrays with critical data - volumes, hosts, LUNs, snapshots, protection groups, pods, ActiveCluster, file systems, buckets, capacity, latency, replication, eradication, best practices, configuration audit.
 ---
 
 # Managing Pure Storage in Production
@@ -41,6 +41,7 @@ Mixed request → split by tier; each T2/T3 item gets its own approval.
 
 ## References
 - references/change-gate.md: plan template (REQUIRED for any change)
+- references/best-practices.md: recommended configuration, read-only audit checks and fix tiers (use for best-practice or config reviews)
 - references/flasharray.md: objects, commands by tier, pre-checks, ActiveCluster, capacity relief
 - references/flashblade.md: FS, exports, S3, replica links
 - references/fusion-and-pure1.md: MCP setup, tokens, Fusion, Pure1 API

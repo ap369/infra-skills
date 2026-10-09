@@ -1,6 +1,6 @@
 ---
 name: managing-ecs-objectscale-production
-description: Use when inspecting, troubleshooting, or changing Dell ECS or ObjectScale object storage, especially production clusters with critical data - S3 buckets, namespaces, object users, secret keys, replication groups, geo replication, lifecycle rules, Object Lock, retention, quotas, bucket policies, capacity, garbage collection.
+description: Use when inspecting, troubleshooting, or changing Dell ECS or ObjectScale object storage, especially production clusters with critical data - S3 buckets, namespaces, object users, secret keys, replication groups, geo replication, lifecycle rules, Object Lock, retention, quotas, bucket policies, capacity, garbage collection, best practices, configuration audit.
 ---
 
 # Managing ECS / ObjectScale in Production
@@ -43,6 +43,7 @@ Reading is free; changing is gated. Every change above read-only is delivered as
 
 ## References
 - references/change-gate.md: plan template (REQUIRED for any change)
+- references/best-practices.md: recommended configuration, read-only audit checks and fix tiers (use for best-practice or config reviews)
 - references/ecs.md: objects, API reads, tiers, decommission, lifecycle, Object Lock, leaked keys
 - references/access-and-tools.md: read-only identities, token handling, secrets hygiene
 - references/health-and-triage.md: health report, incident playbooks
