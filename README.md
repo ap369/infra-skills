@@ -14,6 +14,7 @@ Agent skills (Claude Code, OpenCode) for operating infrastructure in production.
 | `managing-powermax-production` | Dell PowerMax and VMAX (VMAX3, All Flash, 10K/20K/40K). Read-only symcli as a Monitor-role identity; every change goes through a gated, approved change plan. |
 | `managing-unity-vnx-production` | Dell Unity / Unity XT and VNX (block and file). Unity via a GET-only community MCP server plus uemcli; VNX via naviseccli and Control Station; every change goes through a gated, approved change plan. |
 | `managing-ecs-objectscale-production` | Dell ECS / ObjectScale object storage (S3). Read-only Management API (System Monitor) and config-only S3 reads, no secrets in transcripts; every change goes through a gated, approved change plan. |
+| `managing-ibm-cos-production` | IBM Cloud Object Storage on-prem (Cleversafe dsNet). Read-only Manager API and config-only S3 reads, IDA margin math before any device work; every change goes through a gated, approved change plan. |
 
 ## Install
 
@@ -32,6 +33,7 @@ ln -s ~/infra-skills/managing-netapp-production ~/.claude/skills/managing-netapp
 ln -s ~/infra-skills/managing-powermax-production ~/.claude/skills/managing-powermax-production
 ln -s ~/infra-skills/managing-unity-vnx-production ~/.claude/skills/managing-unity-vnx-production
 ln -s ~/infra-skills/managing-ecs-objectscale-production ~/.claude/skills/managing-ecs-objectscale-production
+ln -s ~/infra-skills/managing-ibm-cos-production ~/.claude/skills/managing-ibm-cos-production
 ```
 
 ### OpenCode
@@ -45,6 +47,7 @@ ln -s ~/infra-skills/managing-netapp-production ~/.config/opencode/skills/managi
 ln -s ~/infra-skills/managing-powermax-production ~/.config/opencode/skills/managing-powermax-production
 ln -s ~/infra-skills/managing-unity-vnx-production ~/.config/opencode/skills/managing-unity-vnx-production
 ln -s ~/infra-skills/managing-ecs-objectscale-production ~/.config/opencode/skills/managing-ecs-objectscale-production
+ln -s ~/infra-skills/managing-ibm-cos-production ~/.config/opencode/skills/managing-ibm-cos-production
 ```
 
 Optional: control skill access in `opencode.json`:
@@ -138,3 +141,11 @@ There is no MCP server for ECS. The agent reads through its shell:
 - **`aws s3api get-*`**, with an `ecs-ro` profile that can only read bucket configuration.
 
 See `managing-ecs-objectscale-production/references/access-and-tools.md`.
+
+### IBM Cloud Object Storage / Cleversafe (no MCP)
+
+There is no MCP server for on-prem dsNet. The existing IBM COS MCP servers target IBM Cloud, not a dsNet Manager. The agent reads through its shell:
+- **Manager REST API**, as a dedicated **Read Only** role user.
+- **`aws s3api get-*`**, with a `cos-ro` profile pointing at the Accessers.
+
+See `managing-ibm-cos-production/references/access-and-tools.md`.
