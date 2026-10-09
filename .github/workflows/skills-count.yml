@@ -1,0 +1,40 @@
+name: Update skills count badge
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**/SKILL.md"
+      - "README.md"
+      - ".github/workflows/skills-count.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: skills-count
+  cancel-in-progress: false
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count skills and update badge
+        run: |
+          count=$(find . -name SKILL.md -not -path './.git/*' | wc -l | tr -d ' ')
+          echo "Skills found: $count"
+          sed -i -E "s#(img\.shields\.io/badge/skills-)[0-9]+(-blue)#\1${count}\2#" README.md
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet README.md; then
+            echo "Badge already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Update skills count badge"
+          git push
