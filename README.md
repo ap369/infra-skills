@@ -1,5 +1,7 @@
 # infra-skills
 
+[![License: MIT](https://img.shields.io/github/license/ap369/infra-skills)](LICENSE)
+
 Claude Code skills for operating infrastructure in production.
 
 | Skill | Scope |
