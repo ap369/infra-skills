@@ -60,3 +60,13 @@ REST: `https://<mgmt>/api/types/<type>/instances?fields=...` (pool, lun, filesys
 4. Expire or delete **named** snapshots (T3). The user approves the list they can see: a compact table (ID, source, age, size, reason it's safe). If the user says "don't list them", give the compact table anyway. Approval is for the objects shown, never "the safe set".
    - **Exclude** attached snapshots, replication-owned snapshots (`/prot/rep/session`), snapshots created by AppSync/RecoverPoint/backup apps, and any with a future expiration someone set on purpose.
 5. Move resources to another pool (LUN move: online, heavy I/O).
+
+## Decommission pattern (LUN / FS / datastore)
+1. **Read:**
+   - host access, initiator logins, I/O history over days
+   - replication sessions, snapshot schedules, attached snapshots
+   - for FS: NFS/SMB clients and shares
+2. **Step 0:** a final snapshot (`-keepFor` covering the quarantine), or keep the replication destination for the agreed retention.
+3. **Stage 1 (T3, reversible):** remove host access (record the HLU IDs) or remove the shares/exports. The data stays intact.
+4. **Quarantine:** default 7 days.
+5. **Stage 2 (T3, separate approval, object name typed):** delete the replication session deliberately, then delete the LUN, FS or datastore. **No recycle bin.**

@@ -16,6 +16,35 @@ Agent skills (Claude Code, OpenCode) for operating infrastructure in production.
 | `managing-ecs-objectscale-production` | Dell ECS / ObjectScale object storage (S3). Read-only Management API (System Monitor) and config-only S3 reads, no secrets in transcripts; every change goes through a gated, approved change plan. |
 | `managing-ibm-cos-production` | IBM Cloud Object Storage on-prem (Cleversafe dsNet). Read-only Manager API and config-only S3 reads, IDA margin math before any device work; every change goes through a gated, approved change plan. |
 
+## How the skills work
+
+Every skill follows the same model:
+
+- **Reading is free, changing is gated.** The agent reads through read-only identities (MCP servers in read-only mode, Monitor / Operator / Read Only roles). Every change, whatever the executor (CLI, API, MCP write tool or human), is delivered as a **change plan** and runs only after the user approves *that* plan.
+- **Risk tiers:**
+  - **T0 read:** no approval
+  - **T1 additive:** "approve"
+  - **T2 modify:** "approve" per item
+  - **T3 destructive or disruptive:** the user types the object name, a safety copy is taken first, and the reversible and irreversible stages get separate approvals
+- **The change plan** (`references/change-gate.md`) contains:
+  - the target identity (name, serial/UUID, PROD/DR role) re-read live
+  - evidence and options considered
+  - impact
+  - exact steps with a rollback for each
+  - go/no-go and stop criteria
+  - post-checks
+  - freeze-calendar awareness
+- **Narrowest option first.** For example: unmask before deallocate, FlexClone before a SnapMirror break, a cool-off period before deleting a bucket, one device at a time within the erasure-coding margin.
+- **Each skill includes:**
+  - a best-practice configuration audit
+  - health checks
+  - incident playbooks and communication templates
+  - an upgrade checklist, and migration / tech-refresh guidance
+
+## Disclaimer
+
+Commands, API paths and recommended values come from general vendor knowledge. **They are not validated against your systems or versions.** The skills tell the agent to confirm syntax (`--help` / API reference) and recommended values against current vendor documentation, and site standards override the defaults. Use at your own risk: the change gate reduces risk, it doesn't remove it. Provided under the MIT license, without warranty.
+
 ## Install
 
 ```
@@ -149,3 +178,25 @@ There is no MCP server for on-prem dsNet. The existing IBM COS MCP servers targe
 - **`aws s3api get-*`**, with a `cos-ro` profile pointing at the Accessers.
 
 See `managing-ibm-cos-production/references/access-and-tools.md`.
+
+## Repository layout
+
+```
+managing-<platform>-production/   one skill per platform (SKILL.md + references/)
+shared/                           change-gate core, incident comms, upgrade checklist
+                                  (synced into every skill by scripts/sync_shared.py)
+scripts/sync_shared.py            copy shared files into each skill (--check for CI)
+scripts/lint_skills.py            frontmatter, references, shared copies, README, tests
+tests/                            pressure scenarios and pass criteria per skill
+.github/workflows/                lint + skills-count badge
+```
+
+## Contributing / adding a skill
+
+1. **Baseline first:** write 3–4 pressure scenarios in `tests/<skill>.md` and run them on an agent **without** the skill (see `tests/README.md`). Record what it gets wrong.
+2. Create `managing-<platform>-production/SKILL.md`, with the same sections as the existing skills and ≤ 500 words, plus `references/`. Put platform notes under the marker in `references/change-gate.md`.
+3. Run `python3 scripts/sync_shared.py`, then `python3 scripts/lint_skills.py`.
+4. Re-run the scenarios **with** the skill until every pass criterion holds.
+5. Add the README table row and the symlink lines, then open a PR. CI runs the lint, and the skills badge updates itself.
+
+Edit shared content only in `shared/`, never in a skill's copy, then re-run the sync.

@@ -57,3 +57,13 @@ nas_replicate -list ; nas_replicate -info -all
 | T3 | Snapshot rollback / checkpoint restore | Overwrites newer data |
 | T3 | MirrorView fracture/promote, Replicator failover/switchover/reverse | DR runbook only |
 | T3 | Data Mover failover, SP reboot, NDU / OE upgrade | Dell support. NDU reboots each SP in turn, trespassing everything twice. |
+
+## Decommission pattern (LUN / file system)
+1. **Read:**
+   - storage group membership (HLU IDs)
+   - host logins, I/O history
+   - MirrorView/Replicator, snapshots/checkpoints
+2. **Step 0:** a final snapshot or checkpoint if capacity allows. Otherwise keep a verified backup.
+3. **Stage 1 (T3, reversible):** remove the LUN from its storage group (record the HLU), or unexport/unmount the FS.
+4. **Quarantine:** default 7 days.
+5. **Stage 2 (T3, separate approval, name typed):** fracture/remove mirrors deliberately, then destroy the LUN/FS. **No recycle bin.**

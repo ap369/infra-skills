@@ -1,47 +1,72 @@
 # Change plan template
 
-Every change above T0 is delivered as this document, filled in completely. Nothing gets executed until the user has approved this exact plan. If any value changes after approval (target, size, retention, schedule), the plan is re-issued and re-approved.
+Every change above T0 is delivered as this document, filled in completely. Nothing gets executed until the user has approved this exact plan, whether Claude (CLI, API or MCP tool) or a human runs the commands. If any value changes after approval (target, size, object list, direction, window), the plan is re-issued and re-approved. Platform-specific notes are at the end of this file.
 
 ```markdown
 ## Change plan: <one-line summary>
-**Array(s):** <name> (<FA|FB>, Purity <version>)   **Tier:** T1 | T2 | T3   **Ticket:** <id or "none — user to supply">
-**Requested by:** <user>   **Window:** <now | date/time, business-hours impact>
+**Target:** <system name>: <serial / SID / cluster UUID>, role <PROD | DR | TEST>, site <site>, <model, OS/code version>
+**Tier:** T1 | T2 | T3   **Ticket:** <id or "none, user to supply">   **Requested by:** <user>
+**Window:** <now | date/time, timezone>. Freeze calendar: <checked, no freeze | emergency exception: reason>
+**Executor:** <Claude via CLI/API/MCP, one step at a time | human>
 
 ### 1. Current state (evidence)
 | Check | Value | Source + timestamp |
 |---|---|---|
-| object exists / size / used | ... | MCP tool or CLI output |
-| host connections / LUN ids | ... | |
-| live I/O (and history if available) | ... | |
-| pgroup / pod / replica membership | ... | |
-| pending-eradication + SafeMode state | ... | |
-| capacity headroom (local and target) | ... | |
+| target identity re-read live (name + serial/UUID + role match the request) | ... | command + output |
+| object identity (exact IDs) / size / used | ... | |
+| who uses it (hosts, clients, apps, live I/O, recent access) | ... | |
+| protection (snapshots, replication, retention/locks) | ... | |
+| dependencies (other groups, clones, links, peers, mirrors) | ... | |
+| capacity (pool, destination) | ... | |
+| health (alerts, failed parts, rebuild/resync in progress) | ... | |
 Settings this plan changes, recorded verbatim for rollback: <...>
 
-### 2. Impact
-What changes, who is affected (hosts, apps, DR/RPO), worst-case outcome if a step goes wrong.
+### 2. Options considered
+The narrowest option that meets the goal comes first (see the platform notes). Say why the chosen option was picked.
 
-### 3. Steps (one change per step)
-| # | Command (exact, no wildcards) | Expected result | Rollback |
+### 3. Impact
+What changes, who is affected (hosts, clients, DR/RPO), worst case if a step goes wrong.
+
+### 4. Steps (one change per step)
+| # | Command / call (exact IDs, no wildcards or patterns) | Expected result | Rollback |
 |---|---|---|---|
-| 0 | safety snapshot: `purevol snap --suffix <ticket>` / `purepgroup snap --suffix <ticket>` | snapshot listed | n/a |
+| 0 | safety copy (snapshot or saved config, see the platform notes) | listed / file written | n/a |
 | 1 | ... | ... | ... |
 
-### 4. Post-checks
-Commands that prove the change worked and nothing else changed (connections, I/O, pod status, replication).
+### 5. Go / no-go and stop criteria
+Go only if: section 1 is green, no rebuild/resync/upgrade is in progress, we are inside the window, and the approver is reachable.
+Stop and report (don't improvise a fix) on: unexpected output, a new alert, a latency or error-rate jump, any object not matching the plan's IDs, or a step taking longer than 2× its expected time.
 
-### 5. Approval
+### 6. Post-checks
+Reads that prove the change worked and nothing else changed.
+
+### 7. Approval
 T1/T2: "Reply **approve** to execute steps 0–N."
-T3:    "Reply with the object name(s) exactly — `<name>` — to approve the irreversible/disruptive step(s)."
+T3:    "Reply with the object name(s) exactly, `<name>`, to approve the irreversible/disruptive step(s)."
 ```
 
 ## Rules for filling it in
-- **Approval is scoped to this plan.** "Go ahead", "I approve", "do it" or a title ("I'm the storage lead") said *before* the plan existed approves nothing. Present the plan and get approval for it.
-- **One request, many changes:** split by tier. Additive parts (T1) can be approved together. Each T2 or T3 part gets its own approval line. Never let the approval for an easy part carry a risky part along with it.
-- **Executor:** the Fusion MCP server is read-only, so a human runs the commands. Present them as a copy-paste block and ask for the output back, then run the post-checks through MCP. If write tools exist in the session, they still execute only after approval, one step at a time, with a read between steps.
-- **Emergency path:** keep the same sections in terse form. Section 1 can be 3 lines. Approval still comes before execution. Fill the ticket in afterwards, but the plan text *is* the record, so keep it.
-- **No snapshot possible** (FB bucket, config-only change): say so in step 0 and give the alternative (exported config, recorded settings).
+- **Approval is scoped to this plan.** "Go ahead", "do it now", "whatever it takes", "I approve", or a title ("I'm the manager") said *before* the plan existed approves nothing. It tells you the user wants speed, so make the plan short. It doesn't let you skip it.
+- **Target identity:** re-read the system's name, serial/UUID and role live right before step 1, and again if the session was interrupted. If the user's wording is ambiguous ("the array", "prod", a hostname that could be prod or DR), or the live read doesn't match the plan, stop and ask. Never infer PROD vs. DR from a name alone.
+- **Freeze and windows:** if no window is stated, or a change freeze or blackout applies (month-end, quarter-end, holidays, release freezes), ask. Outside a declared emergency, don't schedule changes into a freeze.
+- **One request, many changes:** split by tier. T1 items can share one approval. Each T2/T3 item gets its own approval line.
+- **Bulk operations:** list every object by its exact ID. The user approves the list shown, even if they asked not to see it: keep it compact, but show it. "Reply go for the safe set" is not an approval form.
+- **Executing:** one command or call per step. Read the result (and re-query the object) before the next step. Never add flags that suppress confirmations. On an unexpected result, stop and report.
+- **Emergency path (P1):** the same sections in terse form. Sections 1–3 can be 5 lines total. Approval still comes before execution. The plan text *is* the change record. Use references/incident-comms.md for status updates.
+- **Secrets:** never put passwords, tokens or secret keys in the plan, the commands shown, or the output.
 - **T3 extras:**
-  - a second person or change board is suggested if the site has one
-  - a wait of at least 24h between destroy and eradicate unless the user insists *after* seeing the list
-  - never eradicate as part of the same approval as destroy
+  - a second person or change board, if the site has one
+  - a reversible stage (unmask, cool-off, deny policy, destroy) and the irreversible stage (eradicate, deallocate, delete, purge) are never in the same approval
+  - for replication, state the **direction** explicitly in every step
+
+<!-- PLATFORM NOTES BELOW: edit freely. Everything above is synced from shared/change-gate-core.md -->
+
+## Platform notes: Pure Storage
+- **Target identity:** `purearray list` (name, ID, Purity version). For ActiveCluster, also check `purepod list --array` to see which array is which side.
+- **Safety copy (step 0):** `purevol snap --suffix <ticket> <vol>` or `purepgroup snap --suffix <ticket> <pg>`. FlashBlade: an FS snapshot. Config-only changes: record the settings verbatim.
+- **Narrowest options:** disconnect before destroy, and destroy before eradicate (let the eradication timer run). Snapshot copy to a new volume before overwriting a volume. Grow before deleting snapshots.
+- **Executor:** the Fusion MCP is read-only. A human runs the command block, or Claude runs it through the CLI if the session has it. Commands go one per step.
+- **T3 specifics:**
+  - `eradicate` is never in the same approval as `destroy`
+  - pod changes need both arrays `online`
+  - SafeMode changes and Purity upgrades go through Pure Support

@@ -114,3 +114,17 @@ Never delete snapshots in bulk "to make room" without the list and an approval.
   4. `snapmirror resync` **from the original source to the destination**. This discards the test writes on the destination, which is intended.
 - Never run `resync` in the reverse direction (destination → source) unless it is a real failback. It overwrites production.
 - Record the policy, schedule and relationship type before you start.
+
+## Decommission pattern (volume / LUN / share)
+1. **Read:**
+   - who uses it: NFS connected clients, CIFS sessions, LUN maps, igroup initiators, I/O history (Harvest/AIQUM over days)
+   - SnapMirror in **both** directions, SnapVault
+   - FlexClone children, junction children
+   - snapshot policy
+2. **Step 0:** a final snapshot named `decom-<ticket>`. If backup or retention requires it, keep the SnapMirror/SnapVault copy at the destination for the agreed retention.
+3. **Stage 1 (T3, reversible):** remove access. Unmap LUNs (record the LUN IDs) or remove the share / unmount the junction. Then `volume offline`. The data stays intact, and online/remap reverses it.
+4. **Quarantine:** default 7 days.
+5. **Stage 2 (T3, separate approval, volume name typed):**
+   1. release or delete SnapMirror relationships deliberately (state the direction)
+   2. `volume delete`, which goes into the recovery queue (12h default)
+6. **Recovery queue:** let it expire on its own. `purge` is only for a capacity emergency, as its own approval.

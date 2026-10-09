@@ -90,3 +90,17 @@ REST 2.x equivalents (GET): `/arrays`, `/arrays/space`, `/arrays/performance`, `
 5. Add capacity (Pure1 forecast, Evergreen).
 
 Never "free space fast" by eradicating. The space returns gradually through garbage collection, and the data can't be recovered.
+
+## Decommission pattern (volume / host / pgroup)
+1. **Read:**
+   - connections (`purevol list --connect`)
+   - I/O history (Pure1 / `purevol monitor` over days, not seconds)
+   - pgroup membership and replication targets
+   - pod membership
+   - snapshots the business may still need
+2. **Step 0:** take a final snapshot (`purevol snap --suffix decom-<ticket>`), or keep the pgroup's snapshots until the quarantine ends.
+3. **Stage 1 (T3, reversible):** disconnect from hosts/hgroups (record the LUN IDs) and remove the volume from its pgroups. Hosts lose access, the data stays intact, and reconnecting with the **same LUN ID** reverses it.
+4. **Quarantine:** default 7 days. Watch for anything that breaks.
+5. **Stage 2 (T3, separate approval, volume names typed):** `purevol destroy`. It's recoverable during the eradication period.
+6. **Eradicate:** let the eradication timer expire. Manual `eradicate` is only for a capacity emergency, as its own approval.
+7. **Hosts:** delete host objects only after every volume connection is gone, and record the WWNs/IQNs in the ticket.
