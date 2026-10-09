@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/github/license/ap369/infra-skills)](LICENSE)
 [![Claude Code Skills](https://img.shields.io/badge/Claude_Code-skills-D97757)](https://docs.claude.com/en/docs/claude-code/skills)
 [![OpenCode Skills](https://img.shields.io/badge/OpenCode-skills-211E1E)](https://opencode.ai/docs/skills/)
-[![Skills](https://img.shields.io/badge/skills-5-blue)](#infra-skills)
+[![Skills](https://img.shields.io/badge/skills-6-blue)](#infra-skills)
 
 Agent skills (Claude Code, OpenCode) for operating infrastructure in production.
 
