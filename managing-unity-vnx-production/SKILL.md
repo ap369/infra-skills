@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing Dell Unity, Unity
 # Managing Unity / VNX in Production
 
 ## Overview
-Reading is free; changing is gated. Every change above read-only is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
 
 ## Access model
 - **Unity reads:** the community Unity MCP server (GET-only) or `uemcli ... show`, as a dedicated **Operator** (read-only) account, because the MCP passes the password on every call. Never enable write methods.
@@ -26,8 +26,8 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - SP reboot / trespass: root cause and SP health → host paths → trespass back. NDU is a separate change.
 - Restore: attach/mount the snapshot and copy → restore last.
 
-## Facts not to get wrong
-- At 100% pool, thin resources stop taking writes; datastores and VMs pause.
+## Key facts
+- At 100% pool, thin resources stop writes; VMs pause.
 - Snapshot restore overwrites newer data. Keep a backup snapshot.
 - Never delete attached, replication-owned or app-created (AppSync/RecoverPoint/backup) snapshots.
 - VNX is end of life: check support status before any upgrade or parts action; plan migration.
@@ -45,6 +45,5 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - best-practices.md: configuration audit
 - unity.md / vnx.md: objects, commands by tier, pool-full relief, decommission
 - access-and-tools.md: Unity MCP risks, uemcli/naviseccli credentials
-- health-and-triage.md: health report, playbooks
-- incident-comms.md: status updates, postmortem
+- health-and-triage.md / incident-comms.md: health, playbooks, status updates
 - upgrade-checklist.md / upgrades-and-migration.md: OE upgrades, VNX exit

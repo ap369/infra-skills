@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing IBM Cloud Object 
 # Managing IBM COS (Cleversafe) in Production
 
 ## Overview
-Reading is free; changing is gated. Every change above read-only is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
 
 ## Access model
 - **No MCP server exists** for on-prem dsNet. Read via shell: Manager `view*`/`list*` as a **Read Only** user, `aws s3api get-*`/`head-*` with a config-only profile. Cite device/vault and timestamp. Never guess state.
@@ -29,7 +29,7 @@ Margin = available devices − write threshold, for **every vault** on the set, 
 - Noisy drives: drive-level action, not node removal.
 - Vault deletion: access-pool removal (cool-off) → delete with a separate approval.
 
-## Facts not to get wrong
+## Key facts
 - Retention can't be disabled; nobody, Super User included, deletes retained objects early.
 - IDA and storage pool are fixed at vault creation.
 - Don't stack maintenance on a rebuilding set.
@@ -47,6 +47,5 @@ Margin = available devices − write threshold, for **every vault** on the set, 
 - best-practices.md: configuration audit
 - ibm-cos.md: IDA, objects, tiers, maintenance, retention
 - access-and-tools.md: Read Only identities, Manager API, secrets
-- health-and-triage.md: health report, playbooks
-- incident-comms.md: status updates, postmortem
+- health-and-triage.md / incident-comms.md: health, playbooks, status updates
 - upgrade-checklist.md / upgrades-and-migration.md: ClevOS upgrades, migration

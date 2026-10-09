@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing Dell PowerMax or 
 # Managing PowerMax / VMAX in Production
 
 ## Overview
-Reading is free; changing is gated. Every change above read-only is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
 
 ## Access model
 - **Reads:** read-only symcli (`list`, `show`, `query`, `verify`, `symevent`, `symaudit`, `symstat`) as a **Monitor-role** identity. Always pass `-sid`. Cite SID and timestamp. If the CLI fails, say so. Never guess state.
@@ -26,7 +26,7 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - SRDF resync: gold-copy SnapVX of R2 → `resume`/incremental establish → `-full` only if track tables are invalid.
 - Restore: link the snapshot to new targets → copy → SnapVX `restore` last.
 
-## Facts not to get wrong
+## Key facts
 - `free -all` / delete = data gone, and its snapshots too.
 - During a resync R2 is **inconsistent**: no restartable DR image without a gold copy.
 - Devices can sit in several (cascaded) SGs and MVs. Check `symdev show` for each.
@@ -45,6 +45,5 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - best-practices.md: configuration audit
 - powermax-vmax.md: objects, commands by tier, decommission, SRDF recovery
 - access-and-tools.md: read-only identity, symcli whitelist, credentials
-- health-and-triage.md: health report, playbooks
-- incident-comms.md: status updates, postmortem
+- health-and-triage.md / incident-comms.md: health, playbooks, status updates
 - upgrade-checklist.md / upgrades-and-migration.md: code upgrades, NDM, tech refresh

@@ -7,6 +7,20 @@
 
 Agent skills (Claude Code, OpenCode) for operating infrastructure in production.
 
+> [!CAUTION]
+> ## ⚠️ READ BEFORE USING THESE SKILLS ON ANY ARRAY ⚠️
+> **Modifying a production storage array is never 100% safe, with or without these skills.** A single wrong command can cause an outage or **permanent, unrecoverable data loss** across every host, application and site that depends on the array.
+>
+> - **These skills reduce risk. They don't eliminate it.** Approval gates, safety snapshots, staged deletes and read-only defaults lower the chance of a mistake, but they can't guarantee a safe outcome.
+> - **Commands and values are NOT validated** against your arrays, firmware or versions. They come from general vendor knowledge and can be wrong, outdated or unsupported in your environment.
+> - **An AI agent can be wrong**, misread output, or pick the wrong object or the wrong array. **You** are responsible for every change you approve. Read every command before approving it.
+> - **Before any change:** have verified backups, test in non-production first, follow your change management process, check the vendor's current documentation, and involve vendor support for upgrades, failovers and anything irreversible.
+> - **Use read-only access by default.** Give an agent write credentials only for an approved change window, and revoke them afterwards.
+> - **No warranty, no liability.** Provided "AS IS" under the MIT license. The authors and contributors accept no liability for outages, data loss or any other damage arising from the use of these skills.
+>
+> **If you aren't prepared to own the outcome of a change, don't approve it.**
+
+
 | Skill | Scope |
 |---|---|
 | `managing-purestorage-production` | Pure Storage FlashArray, FlashBlade, Pure1 and Pure Fusion. Read-only by default (via the Pure Fusion MCP server); every change goes through a gated, approved change plan. |
@@ -43,7 +57,12 @@ Every skill follows the same model:
 
 ## Disclaimer
 
-Commands, API paths and recommended values come from general vendor knowledge. **They are not validated against your systems or versions.** The skills tell the agent to confirm syntax (`--help` / API reference) and recommended values against current vendor documentation, and site standards override the defaults. Use at your own risk: the change gate reduces risk, it doesn't remove it. Provided under the MIT license, without warranty.
+**No change to a storage array is 100% safe.** See the caution notice at the top of this page. In addition:
+
+- Commands, API paths and recommended values come from general vendor knowledge. **They are not validated against your systems or versions.** The skills tell the agent to confirm syntax (`--help` / API reference) and values against current vendor documentation, and site standards override the defaults.
+- Every change plan the agent produces ends with a **safety notice**. Approving a plan means you have read the commands and accept responsibility for running them.
+- The skills are not a substitute for backups, change management, vendor support, or a qualified storage engineer reviewing the change.
+- Provided "AS IS" under the MIT license, without warranty of any kind. The authors accept no liability for outages, data loss or other damage.
 
 ## Install
 

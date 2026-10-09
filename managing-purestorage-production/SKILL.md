@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing Pure Storage Flas
 # Managing Pure Storage in Production
 
 ## Overview
-Reading is free; changing is gated. Every change above read-only is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
 
 ## Access model
 - **Reads:** Pure Fusion MCP server (read-only). Discover its tools at session start (Claude Code: ToolSearch "pure fusion"). Cite array and timestamp. If MCP fails, say so and give read-only CLI/REST. Never guess state.
@@ -25,7 +25,7 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - Restore: copy the snapshot to a new volume before overwriting.
 - Capacity: grow or move before deleting snapshots.
 
-## Facts not to get wrong
+## Key facts
 - `destroy` frees no space and is recoverable during the eradication period (24h default, longer with SafeMode). `eradicate` is permanent.
 - `truncate` cuts data past the new size.
 - Retention cuts prune existing snapshots. Connected or I/O-active means in use.
@@ -45,6 +45,5 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - best-practices.md: configuration audit
 - flasharray.md / flashblade.md: objects, commands by tier, decommission
 - fusion-and-pure1.md: MCP setup, tokens, Pure1
-- health-checks.md / incident-triage.md: health report, playbooks
-- incident-comms.md: status updates, postmortem
+- health-checks.md / incident-triage.md / incident-comms.md: health, playbooks, updates
 - upgrade-checklist.md / upgrades-and-migration.md: upgrades, tech refresh

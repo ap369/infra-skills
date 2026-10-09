@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing Dell ECS or Objec
 # Managing ECS / ObjectScale in Production
 
 ## Overview
-Reading is free; changing is gated. Every change above read-only is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
 
 ## Access model
 - **No MCP server exists.** Read via shell: Management API `GET`s as a **System Monitor** user, and `aws s3api get-*` with a config-only profile. Cite VDC and timestamp. Never guess state.
@@ -27,7 +27,7 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - Leaked key: second key → apps rotate → delete leaked key (immediate delete if actively abused; state the outage).
 - Immutability: GOVERNANCE or a test bucket first; COMPLIANCE is forever.
 
-## Facts not to get wrong
+## Key facts
 - The replication group is fixed at bucket creation.
 - Deleted data frees space only after garbage collection: days, at every site.
 - `put-bucket-lifecycle-configuration` replaces all rules; expiration counts from creation.
@@ -46,6 +46,5 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - best-practices.md: configuration audit
 - ecs.md: objects, API reads, tiers, decommission, lifecycle, Object Lock, leaked keys
 - access-and-tools.md: read-only identities, tokens, secrets
-- health-and-triage.md: health report, playbooks
-- incident-comms.md: status updates, postmortem
+- health-and-triage.md / incident-comms.md: health, playbooks, status updates
 - upgrade-checklist.md / upgrades-and-migration.md: upgrades, migration

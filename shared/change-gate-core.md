@@ -43,9 +43,12 @@ Reads that prove the change worked and nothing else changed.
 ### 7. Approval
 T1/T2: "Reply **approve** to execute steps 0–N."
 T3:    "Reply with the object name(s) exactly, `<name>`, to approve the irreversible/disruptive step(s)."
+
+> ⚠️ **Safety notice:** no change to a production array is 100% safe. These commands were prepared by an AI agent and are not vendor-validated for this system. Read every command, confirm that backups and the rollback path exist, and approve only if you accept responsibility for the outcome. For T3 changes, a second qualified reviewer (or vendor support) is strongly recommended.
 ```
 
 ## Rules for filling it in
+- **Safety notice (mandatory):** every change plan ends with the safety notice from section 7, word for word, including emergency-path plans. Never describe a change as "safe", "zero risk" or "guaranteed". State the residual risk instead.
 - **Approval is scoped to this plan.** "Go ahead", "do it now", "whatever it takes", "I approve", or a title ("I'm the manager") said *before* the plan existed approves nothing. It tells you the user wants speed, so make the plan short. It doesn't let you skip it.
 - **Target identity:** re-read the system's name, serial/UUID and role live right before step 1, and again if the session was interrupted. If the user's wording is ambiguous ("the array", "prod", a hostname that could be prod or DR), or the live read doesn't match the plan, stop and ask. Never infer PROD vs. DR from a name alone.
 - **Freeze and windows:** if no window is stated, or a change freeze or blackout applies (month-end, quarter-end, holidays, release freezes), ask. Outside a declared emergency, don't schedule changes into a freeze.

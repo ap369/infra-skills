@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing NetApp ONTAP (AFF
 # Managing NetApp in Production
 
 ## Overview
-Reading is free; changing is gated. Every change above read-only is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
 
 ## Access model
 - **ONTAP MCP server** (NetApp/ontap-mcp). Reads go through `ontap_get` and discovery tools. Cite cluster and timestamp. If MCP fails, give read-only CLI. Never guess state.
@@ -25,7 +25,7 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - DR test: FlexClone of the destination before break/resync.
 - Full volume: grow → autosize → named snapshot deletes.
 
-## Facts not to get wrong
+## Key facts
 - Delete goes to the recovery queue (12h default). `purge` is permanent.
 - Resync discards data written after the common snapshot on the overwritten side. Always state the direction.
 - A space-offlined LUN stays offline until `lun online`. Deleting a SnapMirror base snapshot breaks replication.
@@ -45,6 +45,5 @@ Reading is free; changing is gated. Every change above read-only is a **change p
 - best-practices.md: configuration audit
 - ontap.md / storagegrid.md: objects, commands by tier, restore, DR test, decommission
 - ontap-mcp-and-bluexp.md: MCP setup, read-only mode, credentials
-- health-checks.md / incident-triage.md: health report, playbooks
-- incident-comms.md: status updates, postmortem
+- health-checks.md / incident-triage.md / incident-comms.md: health, playbooks, updates
 - upgrade-checklist.md / upgrades-and-migration.md: upgrades, tech refresh
