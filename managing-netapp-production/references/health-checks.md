@@ -10,7 +10,7 @@ Report each item as a table row: **Check | Value | Status (OK/WARN/CRIT) | Sourc
 | 4 | Aggregate used | `storage aggregate show -fields percent-used` | ≥ 85% | ≥ 95% |
 | 5 | Volume used | `volume show -fields percent-used,autosize-mode` | ≥ 85% without autosize | ≥ 95%, or any LUN offline |
 | 6 | Snapshot reserve overflow | `volume show-space` | snapshots spilling into the data area | n/a |
-| 7 | Latency | `qos statistics volume latency show` / Harvest | > 2 ms sustained (AFF) | > 10 ms sustained |
+| 7 | Latency | `qos statistics workload latency show` / Harvest | > 2 ms sustained (AFF) | > 10 ms sustained |
 | 8 | LIFs off home port | `network interface show -is-home false` | any | data LIF down |
 | 9 | SnapMirror health and lag | `snapmirror show -fields healthy,lag-time,state` | lag > 2× schedule | unhealthy, broken-off unexpectedly |
 | 10 | Snapshot policy coverage | volumes with snapshot policy `none` holding data | any critical volume | n/a |

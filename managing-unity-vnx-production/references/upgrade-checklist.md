@@ -21,7 +21,7 @@ Upgrades are T3. They usually run as a vendor-led or vendor-orchestrated rolling
 
 ## 2. Plan structure
 1. Upgrade management components first if the vendor requires it (manager, plugins).
-2. For replicated pairs, follow the vendor's order. **DR / destination first** is common, but confirm it for the platform.
+2. For replicated pairs, follow the vendor's interoperability matrix: **every intermediate version pair** during the upgrade of both sides must be supported. Some platforms prescribe an order and others don't (for example, NetApp SnapMirror interoperability is bidirectional), so check the platform notes.
 3. Go one node, controller or device per phase. After each: health back to full, paths restored, rebuild/resync caught up, and no new alerts before the next phase.
 4. Abort criteria, stated up front: a node that doesn't return, a path that doesn't recover, a new critical alert, or latency over the agreed threshold for more than N minutes.
 5. Rollback or back-out: what the vendor allows (many upgrades can't be rolled back after commit). Say this explicitly in the plan.

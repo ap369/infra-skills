@@ -19,7 +19,7 @@ Syntax drifts between ONTAP releases. Confirm with `<command> ?` or the REST doc
 | SnapMirror / SnapVault | Async/sync replication (DR / backup) | Break makes the destination writable. Resync can discard data. |
 | SnapLock / tamperproof snapshots / ARP | Immutability and anti-ransomware | Can't be undone, or weakens protection if disabled |
 | MetroCluster / SM active sync | Synchronous sites | Switchover only through the DR runbook |
-| Volume recovery queue | Deleted volumes are kept for 12h by default *(adv)* | `purge` is irreversible |
+| Volume recovery queue | Deleted volumes are kept for at least 12h by default *(adv)* | `purge` is irreversible. **Deleting the SVM empties the queue** (docs p718). |
 
 ## Read-only commands (T0)
 
@@ -33,16 +33,16 @@ volume show -vserver <svm> -fields size,used,percent-used,available,state,juncti
 volume show-space -vserver <svm> -volume <vol>
 volume snapshot show -vserver <svm> -volume <vol> -fields create-time,size,snapmirror-label
 lun show -vserver <svm> -fields path,size,size-used,state,mapped,space-reserve
-lun mapped show ; igroup show -fields initiator,protocol,ostype
+lun mapping show ; igroup show -fields initiator,protocol,ostype
 vserver nvme subsystem map show ; vserver nvme namespace show
 vserver export-policy rule show -vserver <svm> -policyname <p>
 vserver export-policy check-access -vserver <svm> -volume <vol> -client-ip <ip> -authentication-method sys -protocol nfs3 -access-type read-write
 vserver cifs share show ; vserver cifs session show
-vserver nfs connected-clients show -vserver <svm> -volume <vol>   # who uses it (9.7+)
+nfs connected-clients show -vserver <svm> -volume <vol>   # only clients with traffic in the last 48h; idle mounts invisible
 network interface show -is-home false       # LIFs not on home port
 snapmirror show -fields source-path,destination-path,state,status,lag-time,healthy,policy,schedule
 snapmirror list-destinations
-qos statistics volume latency show ; statistics show-periodic
+qos statistics workload latency show ; qos statistics performance show ; statistics show-periodic
 security anti-ransomware volume show
 volume recovery-queue show                  # (adv)
 security audit log show -timestamp >1h      # who changed what (9.11+; older: event log / audit log files)
@@ -71,20 +71,20 @@ REST (via MCP `ontap_get`): `/api/cluster`, `/api/cluster/nodes`, `/api/storage/
 | T3 | Purge recovery queue | `volume recovery-queue purge` *(adv)* | **NONE** |
 | T3 | Delete snapshot | `volume snapshot delete` / `modify_snapshot` | **NONE** |
 | T3 | **Volume snapshot restore (SnapRestore)** | `volume snapshot restore -snapshot S` / `restore_snapshot` | **NONE.** Discards all data written after S *and every newer snapshot*. Can break SnapMirror. |
-| T3 | Unmap LUN / remove initiator / delete igroup | `lun unmap`, `igroup remove` / `delete_lun_map`, `remove_igroup_initiator` | remap with the **same LUN id** |
+| T3 | Unmap LUN / remove initiator / delete igroup | `lun mapping delete`, `igroup remove` / `delete_lun_map`, `remove_igroup_initiator` | remap with the **same LUN id** |
 | T3 | Shrink volume or LUN | `volume size -new-size <smaller>`, `lun resize -size <smaller>` | none for LUNs (truncates data) |
 | T3 | SnapMirror break | `snapmirror break` / `modify_snapmirror` | resync, which discards destination changes |
 | T3 | SnapMirror resync / reverse resync | `snapmirror resync` | **NONE:** data on the target side newer than the common snapshot is lost |
 | T3 | SnapMirror delete / release | `snapmirror delete`, `snapmirror release` | re-baseline (full transfer) |
 | T3 | LIF modify / migrate / delete | `network interface modify/migrate/delete` | revert. Sessions drop. |
-| T3 | SVM / protocol service delete or stop | `vserver delete`, `vserver nfs stop`, `delete_*_service` | rebuild. Total outage for the SVM. |
+| T3 | SVM / protocol service delete or disable | `vserver delete`, `vserver nfs delete` / `vserver nfs modify` (disabling access), `delete_*_service` | rebuild. Total outage for the SVM. |
 | T3 | Cluster/SVM peer delete | `delete_cluster_peer`, `delete_svm_peer` | re-peer. Breaks every SnapMirror over it. |
 | T3 | ARP disable, SnapLock, tamperproof snapshot settings | `security anti-ransomware volume disable`, ... | weakens ransomware protection, or is irreversible |
 | T3 | Takeover / giveback / reboot / upgrade (ANDU) / MetroCluster switchover | `storage failover takeover`, `system node reboot`, `cluster image update` | NetApp Support or DR runbook only |
 
 ## Pre-check queries every change needs
 1. The object exists. Get its exact SVM, volume and LUN identity (UUID from REST) so the right object is changed.
-2. **Who uses it:** NFS connected clients, CIFS sessions, LUN mapping and igroup initiators, QoS/latency stats showing live I/O. Zero I/O for a few seconds is not proof of disuse. Backup and month-end jobs sit idle most of the time.
+2. **Who uses it:** NFS connected clients (only the last 48h of traffic), CIFS sessions, LUN mapping and igroup initiators, QoS/latency stats showing live I/O. Zero I/O for a few seconds is not proof of disuse. Backup and month-end jobs sit idle most of the time.
 3. Protection: snapshot policy, existing snapshots, SnapMirror relationships *both directions* (`snapmirror show` and `snapmirror list-destinations`), SnapVault, ARP and SnapLock state.
 4. Capacity: volume and aggregate free space, snapshot reserve, autosize settings, fractional reserve.
 5. Dependencies: FlexClones (`volume clone show`). A parent volume or snapshot that a clone depends on can't be deleted. Also check junction children, since unmounting the parent hides them.
@@ -92,7 +92,7 @@ REST (via MCP `ontap_get`): `/api/cluster`, `/api/cluster/nodes`, `/api/storage/
 
 ## Full volume / LUN offline: relief ranked by safety
 A space-reserved or thin LUN goes **offline** when its volume runs out of space, to protect the data.
-1. **Grow the volume** (T2) if the aggregate has room. This is the fastest safe fix. Then bring the LUN online with `lun online` (T2).
+1. **Grow the volume** (T2) if the aggregate has room. This is the fastest safe fix. Then bring the LUN online with `lun modify -vserver S -path P -state online` (T2).
 2. **Enable autosize** (`-autosize-mode grow`, set a max) to prevent a repeat.
 3. Snapshot space: identify the snapshots that hold the most space (`volume snapshot compute-reclaimable`, *adv*). Deleting a snapshot is **T3 and permanent**. Before deleting, check it isn't a SnapMirror or SnapVault base snapshot (deleting the base breaks replication) or the only restore point.
 4. Move the volume (`volume move start`) to a less-full aggregate: online, but heavy I/O.
@@ -128,3 +128,11 @@ Never delete snapshots in bulk "to make room" without the list and an approval.
    1. release or delete SnapMirror relationships deliberately (state the direction)
    2. `volume delete`, which goes into the recovery queue (12h default)
 6. **Recovery queue:** let it expire on its own. `purge` is only for a capacity emergency, as its own approval.
+
+## SnapMirror operational facts (ONTAP docs)
+- `snapmirror quiesce`, `break` and `resync` are run **from the destination SVM or cluster** (p236, p2689).
+- `-quick-resync true` shortens a resync but **can lose storage-efficiency savings**. Since 9.13.1 ONTAP tries it by default when the volume has no clones and uses MirrorAllSnapshots (p2706).
+- A resync replicates only snapshots newer than the **last common snapshot** (p2645). Deleting that snapshot forces a re-baseline.
+- SnapMirror synchronous auto-resync starts only after transfer failures (takeover, network). It never starts after a user's quiesce or break. **StrictSync out of sync stops primary I/O** (p2644).
+- FlexGroup break and resync briefly block client access to the destination. If an operation fails, retry it, because some constituents can stay blocked (p906).
+- After restoring a replicated volume from a snapshot, update the mirrors manually (p2316).

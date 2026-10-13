@@ -9,8 +9,8 @@ description: Use when inspecting, troubleshooting, or changing NetApp ONTAP (AFF
 Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
 
 ## Access model
-- **ONTAP MCP server** (NetApp/ontap-mcp). Reads go through `ontap_get` and discovery tools. Cite cluster and timestamp. If MCP fails, give read-only CLI. Never guess state.
-- **Write tools exist unless the server runs with `--read-only`.** They are capability, not permission. Every non-read tool call is a change, gated like a CLI command. Recommend `--read-only` plus a read-only ONTAP role.
+- **ONTAP MCP server** (NetApp/ontap-mcp): reads via `ontap_get`. Cite cluster and timestamp; if MCP fails, give read-only CLI. Never guess state.
+- **Write tools exist unless the server runs with `--read-only`.** Every non-read call is a gated change. Recommend `--read-only` plus a read-only role (JIT for changes).
 
 ## Risk tiers
 | Tier | Examples | Gate |
@@ -26,24 +26,26 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 - Full volume: grow → autosize → named snapshot deletes.
 
 ## Key facts
-- Delete goes to the recovery queue (12h default). `purge` is permanent.
-- Resync discards data written after the common snapshot on the overwritten side. Always state the direction.
-- A space-offlined LUN stays offline until `lun online`. Deleting a SnapMirror base snapshot breaks replication.
-- `destructiveHint=false` isn't "safe": export-rule edits cut off clients instantly.
+- Delete goes to the recovery queue (≥12h); `purge` and **SVM delete** empty it permanently.
+- Resync discards the overwritten side's data newer than the common snapshot; state the direction.
+- A space-offlined LUN stays offline until set online. Deleting the SnapMirror base snapshot breaks replication.
+- ARP/AI (9.16.1+) is active at once; ARP response order depends on version (see security file).
 
 ## Rationalizations
 | Thought | Reality |
 |---|---|
 | "User said go / approve / I'm the manager" | Approval before the plan existed approves nothing. |
-| "Reversible, so I'll just run it" | Reversibility goes in the plan; T1/T2 still need approval. |
-| "It's only the DR copy" | The DR copy is your RPO. A break pauses protection. |
+| "Reversible, so I'll just run it" | T1/T2 still need approval. |
+| "It's only the DR copy" | It is your RPO; a break pauses protection. |
 | "P1, no time for paperwork" | Use the terse emergency plan; one reply approves it. |
 | "The tool exists, so it's allowed" | Tools are capability, not authorization. |
 
 ## References
 - change-gate.md: plan template, **required for any change**
+- ontap-command-catalog.md: documented commands (check first)
+- ontap-versions-and-defaults.md / ontap-security-and-ransomware.md: versions, defaults, ARP, MAV, JIT
 - best-practices.md: configuration audit
-- ontap.md / storagegrid.md: objects, commands by tier, restore, DR test, decommission
-- ontap-mcp-and-bluexp.md: MCP setup, read-only mode, credentials
+- ontap.md / storagegrid.md: objects, tiers, restore, DR test, decommission
+- ontap-mcp-and-bluexp.md: MCP setup, credentials
 - health-checks.md / incident-triage.md / incident-comms.md: health, playbooks, updates
-- upgrade-checklist.md / upgrades-and-migration.md: upgrades, tech refresh
+- upgrade-checklist.md / upgrades-and-migration.md: upgrades, migration
