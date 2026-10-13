@@ -24,7 +24,7 @@ Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk |
 | P9 | Each host has **≥ 2 paths per fabric**, all logged in | Failover | `symaccess list logins` | fabric/host |
 | P10 | Host multipath per Dell's host guide: PowerPath or native MPIO / NMP Round Robin with the recommended settings | Performance and failover | host side | host |
 | P11 | **Service levels** and host I/O limits only where intended (PowerMaxOS 10: SL behavior differs, see the release docs) | Predictable performance | `symsg show` SL, host I/O limits | T2 |
-| P12 | No orphan devices (not in any SG/MV) and no SGs without an MV, unless documented | Capacity, hygiene | `symdev list -noport`, SGs without views | report |
+| P12 | No orphan devices (not in any SG/MV) and no SGs without an MV, unless documented | Capacity, hygiene | Unisphere unmapped-device report, `symsg list` / `symaccess list view`, SGs without views | report |
 | P13 | Device IDs and LUN addresses consistent across cluster nodes (cascaded IG) | Clusters | masking detail | T2 |
 
 ## Capacity and performance
@@ -42,7 +42,11 @@ Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk |
 |---|---|---|---|---|
 | P18 | **symauth / Unisphere user authorization** enabled. Monitor role for read-only tools. Admin via AD groups. | Accountability, blast radius | `symauth -sid S list` | T2 |
 | P19 | **Symmetrix Access Control (symacl)** restricting which hosts can manage which devices, where used | Prevent rogue management hosts | `symacl list` | T3 |
-| P20 | Gatekeepers dedicated per management host (no shared gatekeepers across apps) | Stability | `symgate list` | T2 |
+| P20 | Gatekeepers dedicated per management host (no shared gatekeepers across apps) | Stability | `symgate list` (CLI Reference; check `-h`) | T2 |
 | P21 | Data at Rest Encryption (D@RE) where policy requires, with an external KMIP manager if mandated | Compliance | `symcfg list -v` (encryption) | T3 |
 | P22 | Unisphere and Solutions Enabler on supported versions. Audit log forwarded to SIEM. Secure Remote Services (SRS / SCG) connected. | Supportability, detection | versions, `symaudit` forwarding | T2 |
 | P23 | PowerMaxOS on a Dell **target code** level | Bugs | `symcfg list -v` | T3 (Dell) |
+| P24 | **≥ 2 vWitness** instances (or an Array Witness) per SRDF/Metro configuration, on separate servers, ideally at a third site. Metro pairs in **ActiveActive** (an unexpected **ActiveBias** means the witness is missing). | Metro survivability | `symrdf -g DG verify -activeactive`, vWitness definitions | T2 |
+| P25 | Secure snapshots sized against the SRP: they keep growing past Reserved Capacity and win over host writes when the SRP is full | Avoid write starvation | `symsnapvx list -detail`, `symcfg list -srp` | T2 |
+| P26 | Agents and monitoring use the **Monitor** role. Changes use the narrowest role (LocalRep / RemoteRep / DeviceManage). symacl limits management hosts. Unisphere on LDAP-TLS with MFA (SecurID/YubiKey) or OIDC, default certificates replaced. | Least privilege | `symauth list`, `symacl list`, Unisphere settings | T2 |
+| P27 | Solutions Enabler ≥ 10.0 for PowerMaxOS 10 (current 10.4). Client/server mode with TLS to `storsrvd`. Lockbox protected. | Supportability, security | `symcli -def`, SE version | T2 |

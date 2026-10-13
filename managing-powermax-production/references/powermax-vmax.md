@@ -24,7 +24,7 @@ symcfg -sid <SID> list -srp -detail                      # SRP capacity, subscri
 symcfg -sid <SID> list -dir all -v                       # director / port status
 symevent -sid <SID> list -start <time>                   # events / errors
 symaudit -sid <SID> list -start <time> -v                # who changed what
-symdisk -sid <SID> list -failed
+symdisk list -sid <SID> -v                                # drive state (Dell docs: -state, -dskgrp_summary)
 symsg -sid <SID> list ; symsg -sid <SID> show <SG>       # SG members, child/parent, SL, MV
 symdev -sid <SID> list -sg <SG> ; symdev -sid <SID> show <dev>   # SGs, SRDF, SnapVX, size, allocations
 symaccess -sid <SID> list view ; symaccess -sid <SID> show view <MV> -detail
@@ -32,7 +32,7 @@ symaccess -sid <SID> list logins [-dirport 1D:4]         # are host WWNs logged 
 symsnapvx -sid <SID> -sg <SG> list -detail [-linked]
 symrdf -sid <SID> list -rdfg <n> ; symcfg -sid <SID> list -rdfg all
 symrdf -g <DG> query [-rdfa] ; symrdf -sid <SID> -sg <SG> -rdfg <n> query
-symstat -sid <SID> -type REQUESTS -sg <SG> -i 10 -c 6    # live I/O
+symstat -sid <SID> -type REQUESTS -sg <SG> -i 10 -c 6    # live I/O (CLI Reference only; check -h)
 symaccess -sid <SID> backup -file <path>                 # local backup of masking config (writes a local file only)
 ```
 Unisphere REST (`https://<unisphere>:8443/univmax/restapi/<ver>/...`): `sloprovisioning/symmetrix/<SID>/storagegroup`, `/volume`, `/maskingview`, `/host`, `/portgroup`, `replication/symmetrix/<SID>/storagegroup/<SG>/snapshot`, `replication/symmetrix/<SID>/rdf_group`, `system/symmetrix/<SID>/alert`. Python: PyU4V. Ansible: `dellemc.powermax`.
@@ -46,13 +46,13 @@ Unisphere REST (`https://<unisphere>:8443/univmax/restapi/<ver>/...`): `sloprovi
 | T1 | Add device to an SG in a masking view | `symsg -sg SG add dev <dev>` | remove: T3 once the host uses it |
 | T1 | Link a snapshot to **new, empty** target devices | `symsnapvx -sg SG -lnsg TGT_SG link -snapshot_name X` | unlink |
 | T2 | Expand device | `symdev -sid S modify <dev> -cap N -captype gb -devs ...` (SRDF pairs: R2 first or both, per SE docs) | none (no shrink) |
-| T2 | Service level / host I/O limit | `symsg -sg SG set -slo ...`, `symsg -sg SG set -bw_max/-iops_max` | previous values |
+| T2 | Service level / host I/O limit | `symsg -sg SG -sid S set -sl <SL>`, `symsg -sg SG -sid S set -bw_max/-iops_max` | previous values |
 | T2 | SRDF resume / incremental establish | `symrdf -g DG resume` / `establish` | suspend (R2 inconsistent until synchronized) |
 | T2 | SRDF suspend / split | `symrdf -g DG suspend` / `split` | resume. DR is paused meanwhile. |
 | T2 | Add initiator / port to IG/PG | `symaccess -type initiator add -wwn` | remove: T3 |
 | T3 | Delete masking view | `symaccess -sid S delete view -name MV` | recreate from the backup file. **The host outage happens in between.** |
 | T3 | Remove device from SG in an MV / remove initiator / remove port | `symsg -sg SG remove dev`, `symaccess remove -wwn` | re-add, same LUN address |
-| T3 | Deallocate / delete devices | `symdev -sid S free -all -devs <list>`, `symconfigure ... delete dev` | **NONE.** Data is gone. |
+| T3 | Deallocate / delete devices | `symdev -sid S free -devs <list> -all` (device must be unmapped or Not Ready; blocked while in replication), `symconfigure ... delete dev` | **NONE.** Data is gone (Dell: "can result in lost data"). |
 | T3 | SnapVX restore | `symsnapvx -sg SG restore -snapshot_name X` | **NONE** for data written after the snapshot. Take a fresh snapshot first. |
 | T3 | Link `-copy` / relink onto devices that hold data | `symsnapvx link -copy`, `relink` | **NONE** for the target's previous data |
 | T3 | Terminate snapshot | `symsnapvx terminate` | **NONE** |
@@ -81,4 +81,4 @@ Never combine stage 1 and stage 2 in one approval.
 - `symrdf -g DG query`: check invalid tracks on R1/R2. Is any R2 device RW (written at DR)?
 - Before resyncing: **gold copy.** Take a SnapVX snapshot of the R2 SG on the DR array (T1). During resync R2 is inconsistent, and the gold copy is the only restartable image.
 - Use `resume` or an incremental `establish`. Use `-full` only if the track tables are invalid, and that needs a T3 plan explaining why.
-- Afterwards, enable consistency (`symrdf -g DG enable`) and confirm with `verify -consistent`.
+- Afterwards, enable consistency (`symrdf -g DG enable`) and confirm with `symrdf -cg CG verify -consistent -noinvalids -i 60`. Check the SRDF State Tables Guide for the actions allowed in the current pair state. Details: snapvx-and-srdf.md.

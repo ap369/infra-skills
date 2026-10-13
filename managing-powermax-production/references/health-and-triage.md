@@ -9,7 +9,7 @@ Report each item as a row: **Check | Value | Status (OK/WARN/CRIT) | Source + ti
 | 2 | SRP capacity | `symcfg list -srp -detail` | ≥ 80% used | ≥ 90% used |
 | 3 | Subscription | same | > 150% (site policy) | n/a |
 | 4 | Directors / ports | `symcfg list -dir all -v` | port offline | director offline |
-| 5 | Drives / spares | `symdisk list -failed` | 1 failed | multiple, or no spare |
+| 5 | Drives / spares | `symdisk list -sid S -v` / Unisphere hardware | 1 failed | multiple, or no spare |
 | 6 | SRDF state and consistency | `symrdf -sid S list`, `query -rdfa` | Suspended / SyncInProg | Partitioned, R2 not consistent for > RPO |
 | 7 | SRDF/A cycle time / DSE | `query -rdfa` | cycle > 2× target | DSE spilling, session dropping |
 | 8 | SnapVX space / expiring secure snaps | `symsnapvx list -detail` | growing deltas | snapshots blocking SRP |

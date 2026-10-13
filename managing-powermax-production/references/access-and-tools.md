@@ -8,7 +8,7 @@ There is no production-grade MCP server for PowerMax/VMAX yet. The only one publ
 - Set `SYMCLI_NOPROMPT` **unset** (prompts stay on). Never pass `-noprompt`, `-force` or `-symforce` in reads.
 - Whitelist of read verbs Claude may run without a plan:
   - `list`, `show`, `query`, `verify`, `ping` (SRDF), `-h`
-  - `symevent`, `symaudit list`, `symstat`
+  - `symevent`, `symaudit list`, `symstat` (symstat is documented in the online CLI Reference only)
   - `symaccess backup` (writes a local file only)
 
   Everything else is a change.

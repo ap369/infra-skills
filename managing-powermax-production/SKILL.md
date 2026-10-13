@@ -28,7 +28,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## Key facts
 - `free -all` / delete = data gone, and its snapshots too.
-- During a resync R2 is **inconsistent**: no restartable DR image without a gold copy.
+- During a resync R2 is **inconsistent**: no restartable image without a gold copy. `-full` is for initial sync or R2 drive swap only.
 - Devices can sit in several (cascaded) SGs and MVs. Check `symdev show` for each.
 - A minute of zero I/O is not proof of disuse.
 
@@ -42,8 +42,9 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
+- snapvx-and-srdf.md / powermax-security-and-versions.md: Dell docs
 - best-practices.md: configuration audit
-- powermax-vmax.md: objects, commands by tier, decommission, SRDF recovery
-- access-and-tools.md: read-only identity, symcli whitelist, credentials
+- powermax-vmax.md: objects, tiers, decommission, SRDF recovery
+- access-and-tools.md: read-only identity, credentials
 - health-and-triage.md / incident-comms.md: health, playbooks, status updates
 - upgrade-checklist.md / upgrades-and-migration.md: code upgrades, NDM, tech refresh
