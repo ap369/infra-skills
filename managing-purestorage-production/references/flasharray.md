@@ -79,8 +79,10 @@ REST 2.x equivalents (GET): `/arrays`, `/arrays/space`, `/arrays/performance`, `
 ## ActiveCluster notes
 - Both arrays must show the pod `online` before *any* change. If it is `resyncing` or `offline`, the change waits.
 - Failover preference (`purepod setattr --failover-preference`) decides which side survives a mediator or link loss. Changing it is T2.
-- The mediator must be reachable (`purepod list --mediator`). If it isn't, a link failure can leave the pod frozen on both sides.
-- Host paths: use uniform access with `--preferred-array` set for the local array. A wrong preference gives cross-site latency, not an outage.
+- The mediator must be reachable (`purepod list --mediator`). **If the mediator is lost and then, within 5 minutes, the replication link or an array is lost, I/O stops on both arrays** (docs: double failure). While the mediator is down, make no other pod or replication-network change.
+- Host paths: for **uniform** hosts, set `purehost setattr --preferred-array <local array> <host>` when inter-array latency is above about 500 µs. It isn't needed for non-uniform hosts. A wrong preference costs latency, not availability.
+- Existing volumes can't be moved into an already-stretched pod. Unstretch is refused while the leaving array has host connections to pod volumes. You can re-stretch without a full resend within 24h.
+- Full details (failure table, ActiveDR promote/demote semantics): activecluster-and-activedr.md.
 
 ## Capacity relief, ranked by safety
 1. Check `purevol list --pending`. Destroyed volumes still consume space until eradication. Eradicating them is still T3.

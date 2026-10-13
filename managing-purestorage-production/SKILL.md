@@ -29,7 +29,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 - `destroy` frees no space and is recoverable during the eradication period (24h default, longer with SafeMode). `eradicate` is permanent.
 - `truncate` cuts data past the new size.
 - Retention cuts prune existing snapshots. Connected or I/O-active means in use.
-- Stretched pod: no change unless both arrays are `online`.
+- Stretched pod: no change unless both arrays are `online` and the mediator is reachable (mediator loss + a 2nd failure within 5 min = I/O down on both).
 
 ## Rationalizations
 | Thought | Reality |
@@ -42,6 +42,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
+- activecluster-and-activedr.md / purity-versions-and-security.md: from Everpure docs
 - best-practices.md: configuration audit
 - flasharray.md / flashblade.md: objects, commands by tier, decommission
 - fusion-and-pure1.md: MCP setup, tokens, Pure1

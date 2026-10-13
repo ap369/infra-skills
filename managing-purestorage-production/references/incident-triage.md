@@ -40,5 +40,10 @@ Follow "Capacity relief, ranked by safety" in flasharray.md.
 
 Re-creating a connection or pgroup target is T3: target-side snapshots may be lost.
 
+## ActiveCluster: mediator unreachable
+1. `purepod list --mediator`, the array connection status and the management network path to the mediator from **each** array.
+2. Mediator loss alone has no I/O impact. After 5 minutes, pre-election protects against a later link loss. But **a second failure within the first 5 minutes stops I/O on both arrays**.
+3. Until the mediator is back: freeze every change on the pods, the replication network and the controllers. Escalate to fix mediator connectivity (firewall/proxy, TCP 443 for the Cloud Mediator), and notify through incident-comms.md.
+
 ## Failover (ActiveCluster / ActiveDR / async DR)
 Only via the site DR runbook and with the incident commander's approval. Claude prepares the checklist and reads the state. It never initiates promote, demote or unstretch on its own judgement.

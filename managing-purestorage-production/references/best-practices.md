@@ -13,7 +13,7 @@ Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk |
 | FA3 | pgroup retention matches the RPO/RTO policy (e.g. hourly for 1d, daily for 7–30d) | Too short loses restore points. Too long wastes capacity. | `purepgroup list --retention --schedule` | T2 |
 | FA4 | **Replication** (async, ActiveDR or ActiveCluster) for tier-1 data, with the RPO monitored | DR | `purepgroup list` targets, `purepod list`, replica lag | T2 |
 | FA5 | SafeMode-protected (retention-locked) pgroups for critical data, where licensed | Locked snapshots | pgroup retention-lock attribute | T3 |
-| FA6 | ActiveCluster: the **mediator** reachable from both arrays (Pure1 cloud mediator or an on-prem mediator at a third site), and the failover preference set per pod | Avoids split-brain and frozen pods | `purepod list --mediator`, failover preference | T2 |
+| FA6 | ActiveCluster: the **mediator** reachable from both arrays **over independent network paths that don't share fate with the replication links** (Cloud Mediator: TCP 443 outbound per site) (Pure1 cloud mediator or an on-prem mediator at a third site), and the failover preference set per pod | Avoids split-brain and frozen pods | `purepod list --mediator`, failover preference | T2 |
 | FA7 | Restore tests: a pgroup snapshot copied to a test volume and mounted at least quarterly | Untested backups don't count | ask / check for recent `purevol copy` test volumes | process |
 
 ## FlashArray: hosts and connectivity
@@ -34,7 +34,7 @@ Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk |
 | FA14 | Array used **< 80%** steady state, with Pure1 forecast runway > 90 days | GC and performance headroom, time to procure | `purearray list --space`, Pure1 forecast | plan capacity |
 | FA15 | Eradication-pending space reviewed (destroyed volumes nobody expects) | Hidden capacity use | `purevol list --pending` | T3 |
 | FA16 | QoS limits only where intended, and documented | An undocumented limit looks like an outage | `purevol list --qos` | T2 |
-| FA17 | Purity on a **supported, recommended** release (Pure1 recommendations), with upgrades via Pure1 self-service or Support | Bugs, security | `purearray list`, Pure1 | T3 |
+| FA17 | Purity on a **supported, recommended** release **at or above the fixed versions of the security bulletins** (purity-versions-and-security.md: e.g. CVE-2024-3057 fixed in 6.6.6, CVE-2026-6444/6445 fixed in 6.10.6/6.5.9). Replication peers within two minor versions. Upgrades via Pure1 self-service or Support | Bugs, security | `purearray list`, Pure1 | T3 |
 
 ## FlashArray: security and management
 
@@ -46,6 +46,11 @@ Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk |
 | FA21 | NTP, DNS, syslog, SNMP/alert email configured. Alert recipients reach a monitored queue. | Detection | `purearray list --ntpserver`, `purealert list` (recipients) | T2 |
 | FA22 | Management interfaces on a management network only, with a trusted cert installed | Attack surface | `purenetwork list`, cert | T2 |
 | FA23 | Encryption at rest (always on), and KMIP if policy requires external key management | Compliance | array info | T3 |
+
+| FA24 | FC zoning single initiator → multiple Pure targets. No ISLs in the host path (or monitored for discards). No link speeds two steps apart. No ports hard-set to a lower speed. | Performance, discards | switch tools (`portshow`, `show interface`), array Health → Connections | fabric |
+| FA25 | iSCSI not routed, on a closed network. MTU consistent end to end (1500, or 9000 everywhere). All interfaces used per host. | Stability, latency | `purenetwork list`, host and switch MTU | network |
+| FA26 | ActiveCluster pods: **failover preference set** for clustered apps on non-uniform hosts. **Preferred array** set on uniform hosts when RTT is above about 500 µs. | Predictable failover, latency | `purepod list`, `purehost list` | T2 |
+| FA27 | Directory service roles mapped to AD **security groups** via `pureds role setattr`, with LDAPS and certificate check. A `readonly` account for monitoring and MCP. | Access control | `pureds list`, `pureds list --groups` | T2 |
 
 ## FlashBlade
 
