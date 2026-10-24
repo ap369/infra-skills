@@ -20,6 +20,6 @@ The complete **FlashBlade REST API 2.29** reference, generated from Pure Storage
 ```
 curl -sSLO https://raw.githubusercontent.com/purestorage-openconnect/swagger/master/html/specs/FB2.<N>.spec.yaml
 pip install pyyaml
-python3 scripts/gen_flashblade_api_docs.py FB2.<N>.spec.yaml
+python3 scripts/gen_api_docs.py flashblade FB2.<N>.spec.yaml
 ```
 `endpoints.md`, `areas/`, `models.md` and `spec/` are regenerated. This README, `python-dev-guide.md` and `NOTICE.md` are hand-written and left alone. Update the version references in them by hand.

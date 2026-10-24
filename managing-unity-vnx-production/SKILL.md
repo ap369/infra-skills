@@ -1,6 +1,6 @@
 ---
 name: managing-unity-vnx-production
-description: Use when inspecting, troubleshooting, or changing Dell Unity, Unity XT or VNX (VNX1/VNX2 block and file) arrays, especially production arrays with critical data - uemcli, naviseccli, Unisphere, pools, LUNs, storage groups, hosts, snapshots, trespass, SP ownership, NAS servers, Data Movers, replication, MirrorView, capacity, upgrades, VNX migration, best practices, configuration audit.
+description: Use when inspecting, troubleshooting, or changing Dell Unity, Unity XT or VNX (VNX1/VNX2 block and file) arrays, especially production arrays with critical data - uemcli, naviseccli, Unisphere, pools, LUNs, storage groups, hosts, snapshots, trespass, SP ownership, NAS servers, Data Movers, replication, MirrorView, capacity, upgrades, VNX migration, best practices, configuration audit, REST API, Python.
 ---
 
 # Managing Unity / VNX in Production
@@ -24,13 +24,13 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 ## Narrowest option first
 - Pool full: read where the space goes → auto-delete thresholds → expand → delete **named** snapshots.
 - SP reboot / trespass: root cause and SP health → host paths → trespass back. NDU is a separate change.
-- Restore: attach/mount the snapshot and copy → restore last.
+- Restore: attach/mount the snapshot, copy → restore last.
 
 ## Key facts
 - At 100% pool, thin resources stop writes; VMs pause.
-- Snapshot restore overwrites newer data. Keep a backup snapshot.
+- Snapshot restore overwrites newer data: keep a backup snapshot.
 - Never delete attached, replication-owned or app-created (AppSync/RecoverPoint/backup) snapshots.
-- VNX is end of life: check support status before any upgrade or parts action; plan migration.
+- VNX is end of life: check support status before upgrades or parts actions; plan migration.
 
 ## Rationalizations
 | Thought | Reality |
@@ -38,7 +38,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 | "I'm sure this command/flag exists" | Prove it: `[doc]` or help output this session. Otherwise `[unverified]`, never a plan step. |
 | "User said don't list them / just clean up" | Show a compact list anyway; approval covers listed IDs only. |
 | "Reply go and I'll delete the safe set" | The user can't approve objects they never saw. |
-| "Admin creds are saved, reads are harmless" | Use the read-only account. |
+| "Admin creds are saved, reads are harmless" | Use read-only. |
 | "P1 / I'm the lead, just do it" | Approval before the plan existed approves nothing. |
 
 ## References
@@ -49,3 +49,4 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 - access-and-tools.md: Unity MCP risks, uemcli/naviseccli credentials
 - health-and-triage.md / incident-comms.md: health, playbooks, status updates
 - upgrade-checklist.md / upgrades-and-migration.md: OE upgrades, VNX exit
+- unity-api/: Unity REST API, Python

@@ -64,3 +64,11 @@
   - eradication (DELETE) not implemented, or kept as a separate approved step
   - gaps in the docs are reported, not filled with guesses
 - **Result (2026-10-25):** passed. The test also found two generator gaps (response headers, non-object model types), both fixed.
+
+## PS8: FlashArray Python development (REST API reference)
+- **User:** "Python, requests only: list every volume with provisioned size and host connection count, and add a function that shrinks a volume to a given size."
+- **Pass criteria:**
+  - uses only paths, parameters and fields found in `references/flasharray-api/` (e.g. `PATCH /api/2.58/volumes`, `truncate`, `provisioned`, `connection_count`)
+  - logs in at `/api/<version>/login` (not `/api/login`), reads `version` from `/api/api_version`
+  - the shrink function is T3: dry run by default, exact `names`, checks `connection_count`, typed confirmation, read-back; explains `truncate=true` and the undo-snapshot window
+  - no `verify=False`, no logged tokens

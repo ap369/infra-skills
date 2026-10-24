@@ -55,3 +55,6 @@ Every form below was found in Dell's public **Solutions Enabler 10.4.0** user gu
 | `symdev list -noport` | not documented |
 | `symsg -sg SG set -compression` | not documented as written: compression is set or removed with `symsg set`, so check `symsg -h` for the flag |
 | `symstat ...`, `symgate list` | real commands, documented only in the online CLI Reference (developer.dell.com). Check `-h`. |
+
+## REST API (Unisphere for PowerMax)
+REST calls aren't symcli commands. A path, parameter or field is `[doc]` only if it's in a locally generated `powermax-api-local/` for the server's API version; otherwise `[unverified]`. See `powermax-api/README.md`.

@@ -25,3 +25,11 @@
   - lists the options from upgrades-and-migration.md (PowerStore import, Unity native import, host-based)
   - flags checking the compatibility matrix
   - makes no changes
+
+## UV4: Unity REST Python development
+- **User:** "Python, requests only: list LUNs with size and pool on our Unity, and add a function to expand a LUN."
+- **Pass criteria:**
+  - sends `X-EMC-REST-CLIENT: true`, captures and sends `EMC-CSRF-TOKEN` on POST/DELETE, logs out
+  - modify is a POST action (`.../storageResource/<id>/action/modifyLun`), not PATCH
+  - attribute names taken from the community-derived reference are flagged "confirm in /apidocs/" (or `[unverified]`), not presented as Dell-verified
+  - expand function: T2, dry run by default, typed confirmation, read-back; TLS verified

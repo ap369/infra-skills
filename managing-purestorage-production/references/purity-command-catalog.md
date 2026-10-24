@@ -17,7 +17,7 @@ The forms below were found in Everpure's **public** documentation (support.everp
 `...` means the documentation shows more parameters. Confirm them with `--help`.
 
 ## FlashBlade REST API
-Every path, parameter and field in `flashblade-api/` (generated from the official FlashBlade REST **2.29** OpenAPI spec) is `[doc]` for API 2.29. Check the array's versions with `GET /api/api_version`.
+Every path, parameter and field in `flashblade-api/` (official FlashBlade REST **2.29** OpenAPI spec) and `flasharray-api/` (official FlashArray REST **2.58** spec) is `[doc]` for that API version. Check the array's versions with `GET /api/api_version`.
 
 ## Common `[unverified]` forms in this skill (check before use)
 `purevol list --qos`, `purevol list --pending`, `purevol setattr --bw-limit`, `purevol truncate`, `purevol eradicate`, `purevol recover`, `purepgroup retain ...`, `purepgroup schedule ...`, `purepod add|remove --array`, `purepod list --mediator`, `purehost connect|disconnect --vol`, `puremessage list --open`, `purearray list --space|--phonehome|--ntpserver`, `pureadmin list --api-token`, `purefs list ...`, `pureobjbucket list`, and every FlashBlade command. These are probably right for recent Purity versions, but they aren't documented here.

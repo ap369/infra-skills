@@ -1,6 +1,6 @@
 ---
 name: managing-netapp-production
-description: Use when inspecting, troubleshooting, or changing NetApp ONTAP (AFF, FAS, ASA), StorageGRID, BlueXP or Cloud Volumes ONTAP systems, especially production clusters with critical data - SVMs, volumes, aggregates, LUNs, igroups, NFS exports, CIFS shares, snapshots, SnapRestore, SnapMirror, FlexClone, capacity, latency, ransomware, ILM, upgrades, migration, best practices, configuration audit.
+description: Use when inspecting, troubleshooting, or changing NetApp ONTAP (AFF, FAS, ASA), StorageGRID, BlueXP or Cloud Volumes ONTAP systems, especially production clusters with critical data - SVMs, volumes, aggregates, LUNs, igroups, NFS exports, CIFS shares, snapshots, SnapRestore, SnapMirror, FlexClone, capacity, latency, ransomware, ILM, upgrades, migration, best practices, configuration audit, REST API, Python.
 ---
 
 # Managing NetApp in Production
@@ -9,8 +9,8 @@ description: Use when inspecting, troubleshooting, or changing NetApp ONTAP (AFF
 Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice. **Never invent commands, flags, endpoints, tools or output:** tag commands `[doc]`/`[help]`/`[unverified]`; plans use only `[doc]`/`[help]`; unread values are `<not read>`.
 
 ## Access model
-- **ONTAP MCP server** (NetApp/ontap-mcp): reads via `ontap_get`. Cite cluster and timestamp; if MCP fails, give read-only CLI. Never guess state.
-- **Write tools exist unless the server runs with `--read-only`.** Every non-read call is a gated change. Recommend `--read-only` plus a read-only role (JIT for changes).
+- **ONTAP MCP server** (NetApp/ontap-mcp): reads via `ontap_get`. Cite cluster and timestamp; else give read-only CLI. Never guess state.
+- **Write tools exist unless the server runs with `--read-only`.** Every non-read call is a gated change. Recommend `--read-only` plus a read-only role.
 
 ## Risk tiers
 | Tier | Examples | Gate |
@@ -51,3 +51,4 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 - ontap-mcp-and-bluexp.md: MCP setup, credentials
 - health-checks.md / incident-triage.md / incident-comms.md: health, playbooks, updates
 - upgrade-checklist.md / upgrades-and-migration.md: upgrades, migration
+- ontap-api/: REST API (ONTAP, ASA r2), Python

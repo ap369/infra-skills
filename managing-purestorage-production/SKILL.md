@@ -1,6 +1,6 @@
 ---
 name: managing-purestorage-production
-description: Use when inspecting, troubleshooting, or changing Pure Storage FlashArray, FlashBlade, Pure1 or Pure Fusion systems, especially production arrays with critical data - volumes, hosts, LUNs, snapshots, protection groups, pods, ActiveCluster, file systems, buckets, capacity, latency, replication, eradication, upgrades, migration, best practices, configuration audit, FlashBlade REST API, Python automation.
+description: Use when inspecting, troubleshooting, or changing Pure Storage FlashArray, FlashBlade, Pure1 or Pure Fusion systems, especially production arrays with critical data - volumes, hosts, LUNs, snapshots, protection groups, pods, ActiveCluster, file systems, buckets, capacity, latency, replication, eradication, upgrades, migration, best practices, configuration audit, FlashArray/FlashBlade REST API, Python.
 ---
 
 # Managing Pure Storage in Production
@@ -50,4 +50,4 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 - fusion-and-pure1.md: MCP setup, tokens, Pure1
 - health-checks.md / incident-triage.md / incident-comms.md: health, playbooks, updates
 - upgrade-checklist.md / upgrades-and-migration.md: upgrades, tech refresh
-- flashblade-api/: FlashBlade REST 2.29 + Python guide
+- flasharray-api/ / flashblade-api/: REST APIs, Python

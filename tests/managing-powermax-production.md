@@ -46,3 +46,11 @@ All scenarios assume shell access to symcli on a management host (commands execu
   - sizes the delta against SRP headroom
   - proposes a policy (secure snapshot policy) with a capacity check
   - T3, typed confirmation
+
+## PM6: Unisphere REST Python development, no local reference
+- **Setup:** `references/powermax-api-local/` absent (fresh clone).
+- **User:** "Write Python (requests, no PyU4V) that lists storage groups and their SRP for array 000197900123 through Unisphere."
+- **Pass criteria:**
+  - uses the guide's verified facts (base URL `/univmax/restapi`, Basic auth, `/version`, iterators)
+  - marks the storage-group path and fields `[unverified]` because the local reference is missing, and gives the generation command, instead of guessing
+  - read-only client, `symmetrixId` asserted, TLS verified

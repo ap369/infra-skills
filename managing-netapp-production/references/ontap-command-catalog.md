@@ -73,3 +73,6 @@ The commands below appear in the *ONTAP 9 documentation* PDF (2026-10-08). Prefe
 - **AutoSupport:**
   - read: `system node autosupport show`, `system node autosupport history show`, `system node autosupport check show`
   - changes: `system node autosupport invoke` (T1; tell the user, because it sends data to NetApp)
+
+## REST API
+REST calls aren't CLI commands. GET endpoints, filters and fields in `ontap-api/` are `[doc]` for ONTAP 9.16 reads. Writes, and anything for ASA r2, are `[doc]` only if listed in a locally generated `ontap-api-local/` / `asa-api-local/`; otherwise `[unverified]`. See `ontap-api/README.md`.

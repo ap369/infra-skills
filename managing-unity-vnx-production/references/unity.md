@@ -73,3 +73,6 @@ REST: `https://<mgmt>/api/types/<type>/instances?fields=...` (pool, lun, filesys
 3. **Stage 1 (T3, reversible):** remove host access (record the HLU IDs) or remove the shares/exports. The data stays intact.
 4. **Quarantine:** default 7 days.
 5. **Stage 2 (T3, separate approval, object name typed):** delete the replication session deliberately, then delete the LUN, FS or datastore. **No recycle bin.**
+
+## REST API (Unity)
+REST calls are not uemcli commands. A resource type, action or attribute is `[doc]` only after you confirm it in the system's own `https://<unity-mgmt>/apidocs/` (or a locally generated `unity-api-local/` built from an official Dell spec). Otherwise it is `[unverified]`. See `unity-api/README.md`.
