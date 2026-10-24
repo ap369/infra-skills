@@ -1,6 +1,6 @@
 # Python development against the Unity REST API (plain HTTP, no SDK)
 
-Sources: the text of Dell's *Unisphere Management REST API Reference Guide* **5.4.0** as carried in the community `openapi.json` (README.md, *Provenance*), and Dell's KB on using cURL with the Unity REST API (headers, CSRF). Retrieved 2026-10-25. **Confirm every resource, action and attribute in `https://<unity-mgmt>/apidocs/` before using it in a change.** If you can't, it's `[unverified]` (command-verification.md).
+Sources: the text of Dell's *Unisphere Management REST API Reference Guide* **5.4.0** as carried in the community `openapi.json` (README.md, *Provenance*; generated lookup files in [endpoints.md](endpoints.md), [areas/](areas/), [models.md](models.md)), and Dell's KB on using cURL with the Unity REST API (headers, CSRF). Retrieved 2026-10-25. **Confirm every resource, action and attribute in `https://<unity-mgmt>/apidocs/` before using it in a change.** If you can't, it's `[unverified]` (command-verification.md).
 
 ## 1. Basics
 | Topic | Fact |

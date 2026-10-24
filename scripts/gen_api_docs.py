@@ -9,8 +9,8 @@ Profiles (output folder in brackets; *-api-local/ folders are git-ignored and mu
     flasharray  [managing-purestorage-production/references/flasharray-api]      Apache-2.0 spec, committed
     ontap       [managing-netapp-production/references/ontap-api-local]          cluster's /docs/api/swagger.yaml, local only
     asa         [managing-netapp-production/references/asa-api-local]            ASA r2 system's swagger, local only
-    powermax    [managing-powermax-production/references/powermax-api-local]     Dell Unisphere OpenAPI, local only
-    unity       [managing-unity-vnx-production/references/unity-api-local]       Unity OpenAPI, local only
+    powermax    [managing-powermax-production/references/powermax-api]           Dell OpenAPI from dell/PyU4V (Apache-2.0), committed
+    unity       [managing-unity-vnx-production/references/unity-api]             community Unity OpenAPI (unofficial), committed
 
 Writes into the output folder:
     endpoints.md          index of every operation (method, path, summary, risk tier)
@@ -49,14 +49,16 @@ PROFILES = {
     "asa": dict(out="managing-netapp-production/references/asa-api-local", name="ASA r2 (ONTAP) REST API",
                 note=LOCAL_NOTE, source="the ASA r2 system's own spec (`https://<cluster-mgmt>/docs/api/swagger.yaml`)",
                 check="GET /api/cluster/nodes?fields=version", extra=""),
-    "powermax": dict(out="managing-powermax-production/references/powermax-api-local", name="Unisphere for PowerMax REST API",
-                     note=LOCAL_NOTE, source="Dell's Unisphere for PowerMax OpenAPI spec",
-                     check="GET /univmax/restapi/version", extra=""),
-    "unity": dict(out="managing-unity-vnx-production/references/unity-api-local", name="Unity Unisphere Management REST API",
-                  note=LOCAL_NOTE, source="a Unity OpenAPI spec (see README.md for provenance)",
-                  check="GET /api/types/basicSystemInfo/instances",
-                  extra=" **as far as the source spec is accurate**: if it's a community conversion, confirm a path or "
-                        "attribute in the system's own `https://<unity>/apidocs/` before using it in a change"),
+    "powermax": dict(out="managing-powermax-production/references/powermax-api", name="Unisphere for PowerMax REST API",
+                     note=("> Source: Dell's Unisphere for PowerMax OpenAPI spec, **{title} {version}**, as published in "
+                           "github.com/dell/PyU4V (`PyU4V/tools/openapi.json`, Apache-2.0, see NOTICE.md). Everything here is "
+                           "`[doc]` for **this API version**. Check the server with `GET /univmax/restapi/version` first.\n")),
+    "unity": dict(out="managing-unity-vnx-production/references/unity-api", name="Unity Unisphere Management REST API",
+                  note=("> Source: **unofficial** community conversion of Dell's *{title}* **{version}** "
+                        "(github.com/sachdev27/dell-unity-mcp-server `openapi.json`, see NOTICE.md). Not published by Dell; "
+                        "query-parameter names are missing. Confirm every path and attribute in the system's own "
+                        "`https://<unity>/apidocs/` before using it in a change (until then it is `[unverified]`). "
+                        "Check the system with `GET /api/types/basicSystemInfo/instances` first.\n")),
 }
 
 

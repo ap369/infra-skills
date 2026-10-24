@@ -1,25 +1,25 @@
 # Unisphere for PowerMax REST API reference (for Python development)
 
-Use this to write Python code against Unisphere for PowerMax with plain HTTP (`requests` / `httpx`). **No Dell SDK (PyU4V) is used.**
+The **Unisphere for PowerMax 10.3** REST API reference, generated from Dell's OpenAPI spec as published in Dell's Apache-2.0 PyU4V repository. Use it to write Python code against Unisphere with plain HTTP (`requests` / `httpx`). **No Dell SDK (PyU4V) is used.**
 
 | File | What it holds |
 |---|---|
-| [python-dev-guide.md](python-dev-guide.md) | **Start here.** Base URL, auth, versions, iterators (pagination), async jobs, destructive edits, a reusable `requests` client, safety rules. Committed. |
-| `../powermax-api-local/` | **Full** reference (every endpoint, parameter, body and model) generated **on your machine** from Dell's OpenAPI spec. Git-ignored: never commit or share it (Dell copyright). |
+| [python-dev-guide.md](python-dev-guide.md) | **Start here.** Base URL, auth, versions, iterators (pagination), async jobs, destructive edits, a reusable `requests` client, safety rules. |
+| [endpoints.md](endpoints.md) | Every operation (691), grouped by area, with method, path, summary and this skill's risk tier |
+| [areas/](areas/) | One file per API area (25 areas): all parameters, request-body fields and responses |
+| [models.md](models.md) | All 1200 request/response models with their fields |
+| [spec/openapi.json](spec/openapi.json) | The spec, unmodified (Apache-2.0, see NOTICE.md) |
 
 ## How to use it (for the agent)
-1. If `../powermax-api-local/` exists: find the operation in its `endpoints.md`, then the exact parameters and body in `areas/<area>.md` and `models.md`. Those names are `[doc]` **for the spec's version** (shown in each file's header, e.g. PowerMax 10.3 = API version prefix `/103/`).
-2. If it doesn't exist: every REST path, parameter and field is `[unverified]`. Say so, and offer the generation steps below. Never guess a path from memory: Unisphere paths differ between API versions (`/100/`, `/101/`, `/103/`…) and resources.
-3. Check the target first: `GET /univmax/restapi/version` tells you the Unisphere version and the API versions it supports. Use a path prefix the server supports and the spec documents.
+1. Find the operation in **endpoints.md**, then the exact parameters and body in **areas/<area>.md** and **models.md**. Those names are `[doc]` **for API version 103 (PowerMax 10.3)**. Anything not in these files is `[unverified]` (command-verification.md).
+2. Check the target first: `GET /univmax/restapi/version` gives the Unisphere version and supported API versions. If the server doesn't support `103`, regenerate from the spec served by that Unisphere (`https://<unisphere>:8443/univmax/restapi/docs`). Never guess a path for another version: paths differ between `/100/`, `/101/`, `/103/`…
+3. Many PUTs carry a choice of actions in the body. Tier the **action** you send, not the method (python-dev-guide.md §2).
 4. Code that reads (GET) is T0. Code that writes (POST, PUT, DELETE) is a change: change-gate.md, and the safety rules in python-dev-guide.md.
 
-## Generate the full reference locally (never commit)
-Use the spec that matches your Unisphere version. Two public sources:
-- the server itself: the REST documentation can be downloaded from `https://<unisphere>:8443/univmax/restapi/docs`;
-- Dell's PyU4V repository (github.com/dell/PyU4V, file `PyU4V/tools/openapi.json`, PowerMax 10.3 at the time of writing).
+## Regenerating
 ```
-curl -sSL -o powermax_openapi.json https://raw.githubusercontent.com/dell/PyU4V/HEAD/PyU4V/tools/openapi.json
+curl -sSL -o openapi.json https://raw.githubusercontent.com/dell/PyU4V/HEAD/PyU4V/tools/openapi.json
 pip install pyyaml
-python3 scripts/gen_api_docs.py powermax powermax_openapi.json    # writes references/powermax-api-local/
+python3 scripts/gen_api_docs.py powermax openapi.json
 ```
-`git status` must not show `powermax-api-local/` (it matches `*-api-local/` in .gitignore).
+`endpoints.md`, `areas/`, `models.md` and `spec/` are regenerated. This README, `python-dev-guide.md` and `NOTICE.md` are hand-written.

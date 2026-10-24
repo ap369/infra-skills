@@ -75,4 +75,4 @@ REST: `https://<mgmt>/api/types/<type>/instances?fields=...` (pool, lun, filesys
 5. **Stage 2 (T3, separate approval, object name typed):** delete the replication session deliberately, then delete the LUN, FS or datastore. **No recycle bin.**
 
 ## REST API (Unity)
-REST calls are not uemcli commands. A resource type, action or attribute is `[doc]` only after you confirm it in the system's own `https://<unity-mgmt>/apidocs/` (or a locally generated `unity-api-local/` built from an official Dell spec). Otherwise it is `[unverified]`. See `unity-api/README.md`.
+REST calls are not uemcli commands. A resource type, action or attribute is `[doc]` only after you confirm it in the system's own `https://<unity-mgmt>/apidocs/` (`unity-api/` is a community conversion: a lookup aid, not proof). Otherwise it is `[unverified]`. See `unity-api/README.md`.

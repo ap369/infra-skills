@@ -1,6 +1,6 @@
 # Python development against the Unisphere for PowerMax REST API (plain HTTP, no SDK)
 
-Facts below are from Dell's **Unisphere for PowerMax 10.3 OpenAPI spec** (title "PowerMax 10.3", as published in github.com/dell/PyU4V `PyU4V/tools/openapi.json`, retrieved 2026-10-25). Paths, parameters and fields: look them up in your local `../powermax-api-local/` (README.md). **Never invent a path, parameter or field.** If it isn't in the local reference, it's `[unverified]` (command-verification.md).
+Facts below are from Dell's **Unisphere for PowerMax 10.3 OpenAPI spec** (title "PowerMax 10.3", as published in github.com/dell/PyU4V `PyU4V/tools/openapi.json`, retrieved 2026-10-25). Look up exact paths, parameters and fields in [endpoints.md](endpoints.md), [areas/](areas/) and [models.md](models.md). **Never invent a path, parameter or field.** If it isn't in these files, it's `[unverified]` (command-verification.md).
 
 ## 1. Basics from the spec
 | Topic | Spec fact |

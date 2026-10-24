@@ -74,8 +74,8 @@ Every skill follows the same model:
 | `managing-purestorage-production` (FlashBlade REST API) | Official **FlashBlade REST API 2.29** OpenAPI spec from [purestorage-openconnect/swagger](https://github.com/purestorage-openconnect/swagger) (Apache-2.0) | Retrieved **2026-10-25** | Full generated reference (661 operations, 100 areas, 977 models) in `references/flashblade-api/`, plus a Python guide using plain `requests` (no SDK). Regenerate with `scripts/gen_api_docs.py flashblade`. |
 | `managing-purestorage-production` (FlashArray REST API) | Official **FlashArray REST API 2.58** OpenAPI spec, same repository (Apache-2.0) | Retrieved **2026-10-25** | Full generated reference (706 operations, 81 areas, 1061 models) in `references/flasharray-api/`, plus a Python guide. Regenerate with `scripts/gen_api_docs.py flasharray`. |
 | `managing-netapp-production` (ONTAP / ASA r2 REST API) | NetApp [ontap-mcp](https://github.com/NetApp/ontap-mcp) API catalog, **ONTAP 9.16** (Apache-2.0); NetApp docs *Getting started with the ONTAP REST API* (2026-10-13) and *REST API support for ASA r2* (2026-08-26) | Retrieved **2026-10-25** | Read-only reference (212 GET endpoints with filters and fields) in `references/ontap-api/`, plus a Python guide. The **full** ONTAP / ASA r2 API is NetApp copyright: generate it locally from your cluster's `/docs/api` (`scripts/gen_api_docs.py ontap\|asa`, git-ignored). |
-| `managing-powermax-production` (Unisphere REST API) | Dell **Unisphere for PowerMax 10.3** OpenAPI spec as published in [dell/PyU4V](https://github.com/dell/PyU4V) (`PyU4V/tools/openapi.json`) | Retrieved **2026-10-25** | Python guide in `references/powermax-api/` (committed). The full reference is Dell copyright: generate it locally (`scripts/gen_api_docs.py powermax`, git-ignored). |
-| `managing-unity-vnx-production` (Unity REST API) | Community conversion of Dell's *Unisphere Management REST API Reference Guide* **5.4.0** ([sachdev27/dell-unity-mcp-server](https://github.com/sachdev27/dell-unity-mcp-server) `openapi.json`, unofficial) | Retrieved **2026-10-25** | Python guide in `references/unity-api/` (committed). Full reference generated locally only (`scripts/gen_api_docs.py unity`, git-ignored); names must be confirmed in the system's `/apidocs/`. |
+| `managing-powermax-production` (Unisphere REST API) | Dell **Unisphere for PowerMax 10.3** OpenAPI spec as published in [dell/PyU4V](https://github.com/dell/PyU4V) (`PyU4V/tools/openapi.json`) | Retrieved **2026-10-25** | Full generated reference (691 operations, 25 areas, 1200 models) and a Python guide in `references/powermax-api/`. Regenerate with `scripts/gen_api_docs.py powermax`. |
+| `managing-unity-vnx-production` (Unity REST API) | Community conversion of Dell's *Unisphere Management REST API Reference Guide* **5.4.0** ([sachdev27/dell-unity-mcp-server](https://github.com/sachdev27/dell-unity-mcp-server) `openapi.json`, unofficial) | Retrieved **2026-10-25** | Full generated reference (777 operations, 147 resource types, 506 models) and a Python guide in `references/unity-api/`; names must be confirmed in the system's `/apidocs/`. Regenerate with `scripts/gen_api_docs.py unity`. |
 | `managing-purestorage-production` (MCP) | [Pure Fusion MCP Server sneak peek](https://blog.everpuredata.com/products/a-sneak-peek-at-the-pure-fusion-mcp-server/) (Pure blog) | read 2026-10-09 | |
 | `managing-unity-vnx-production` (MCP) | [sachdev27/dell-unity-mcp-server](https://github.com/sachdev27/dell-unity-mcp-server) README | as of 2026-10-09 | Community server; credentials passed per call |
 | `managing-powermax-production` | Dell **public** PDFs on dl.dell.com (index: Dell KB 000189115 / 000226772): Solutions Enabler **10.4.0** SRDF Family CLI User Guide, Array Controls and Management CLI User Guide, SRDF State Tables Guide, Installation Guide, What's new 10.4.0; TimeFinder SnapVX CLI User Guide 10.0.0 (latest; no SnapVX changes in 10.4); PowerMax Family Security Configuration Guide (PowerMaxOS 10) and Product Guide; SRDF Introduction; SRDF/Metro vWitness Configuration Guide; Events and Alerts 10.3.0 | Docs dated Jul 2022 → **Apr 2026**, retrieved **2026-10-14**. Covers Solutions Enabler 10.4 / PowerMaxOS 10. | Commands checked against the guides (`-slo` → `-sl`, `symdisk list -failed` replaced, `free -all` preconditions). `symstat` and `symgate` are only in the online CLI Reference (developer.dell.com, not fetchable), so they're marked unverified. PowerMaxOS and SE **release notes need a Dell login** and weren't used. |
@@ -219,12 +219,14 @@ See `managing-ibm-cos-production/references/access-and-tools.md`.
 
 ## Third-party content
 
-The repository is MIT-licensed, except these files, which are under the **Apache License 2.0** (license and attribution in each folder's `spec/LICENSE` and `NOTICE.md`):
+The repository is MIT-licensed, except these third-party files (licence and attribution in each folder's `spec/LICENSE` and `NOTICE.md`):
 
-- `managing-purestorage-production/references/flashblade-api/spec/FB2.29.spec.yaml` and `flasharray-api/spec/FA2.58.spec.yaml`: Pure Storage / Everpure REST API specs
-- `managing-netapp-production/references/ontap-api/spec/ontap_api_catalog.json`: NetApp ontap-mcp API catalog
+- `managing-purestorage-production/references/flashblade-api/spec/FB2.29.spec.yaml` and `flasharray-api/spec/FA2.58.spec.yaml`: Pure Storage / Everpure REST API specs, **Apache-2.0**
+- `managing-netapp-production/references/ontap-api/spec/ontap_api_catalog.json`: NetApp ontap-mcp API catalog, **Apache-2.0**
+- `managing-powermax-production/references/powermax-api/spec/openapi.json`: Dell Unisphere for PowerMax spec from dell/PyU4V, **Apache-2.0**
+- `managing-unity-vnx-production/references/unity-api/spec/unity_openapi.json`: community conversion of Dell's Unity REST reference from sachdev27/dell-unity-mcp-server, **MIT** (unofficial; not a Dell publication)
 
-Vendor API references that aren't openly licensed (full ONTAP / ASA r2 swagger, Dell PowerMax and Unity specs) are **not** in this repository. `scripts/gen_api_docs.py` generates them on your machine into `*-api-local/` folders, which `.gitignore` excludes. Don't commit or redistribute them.
+The generated `endpoints.md`, `areas/` and `models.md` next to them are derived from those files. The full ONTAP / ASA r2 swagger is NetApp copyright and is **not** in this repository: `scripts/gen_api_docs.py` generates it on your machine into `*-api-local/` folders, which `.gitignore` excludes. Don't commit or redistribute them.
 
 ## Repository layout
 
@@ -235,7 +237,7 @@ shared/                           change-gate core, incident comms, upgrade chec
 scripts/sync_shared.py            copy shared files into each skill (--check for CI)
 scripts/lint_skills.py            frontmatter, references, shared copies, README, tests
 scripts/gen_api_docs.py           generate a REST API reference from an OpenAPI / Swagger spec
-                                  (Pure: committed; ONTAP, ASA, PowerMax, Unity: *-api-local/, git-ignored)
+                                  (Pure, PowerMax, Unity: committed; ONTAP, ASA: *-api-local/, git-ignored)
 scripts/gen_ontap_catalog_docs.py generate the read-only ONTAP reference from the ontap-mcp catalog
 tests/                            pressure scenarios and pass criteria per skill
 .github/workflows/                lint + skills-count badge

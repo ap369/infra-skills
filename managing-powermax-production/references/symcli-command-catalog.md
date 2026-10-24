@@ -57,4 +57,4 @@ Every form below was found in Dell's public **Solutions Enabler 10.4.0** user gu
 | `symstat ...`, `symgate list` | real commands, documented only in the online CLI Reference (developer.dell.com). Check `-h`. |
 
 ## REST API (Unisphere for PowerMax)
-REST calls aren't symcli commands. A path, parameter or field is `[doc]` only if it's in a locally generated `powermax-api-local/` for the server's API version; otherwise `[unverified]`. See `powermax-api/README.md`.
+REST calls aren't symcli commands. A path, parameter or field is `[doc]` only if it's in `powermax-api/` (API version 103) and the server supports that version; otherwise `[unverified]`. See `powermax-api/README.md`.
