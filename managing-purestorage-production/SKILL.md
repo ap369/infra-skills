@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing Pure Storage Flas
 # Managing Pure Storage in Production
 
 ## Overview
-Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice. **Never invent commands, flags, endpoints, tools or output:** tag commands `[doc]`/`[help]`/`[unverified]`; plans use only `[doc]`/`[help]`; unread values are `<not read>`.
 
 ## Access model
 - **Reads:** Pure Fusion MCP server (read-only). Discover its tools at session start (Claude Code: ToolSearch "pure fusion"). Cite array and timestamp. If MCP fails, say so and give read-only CLI/REST. Never guess state.
@@ -34,6 +34,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 ## Rationalizations
 | Thought | Reality |
 |---|---|
+| "I'm sure this command/flag exists" | Prove it: `[doc]` or help output this session. Otherwise `[unverified]`, never a plan step. |
 | "User said go ahead / I approve" | Approval before the plan existed approves nothing. |
 | "Additive / reversible, I'll just do it" | T1 still needs the plan. |
 | "Emergency, I'll file the change after" | Use the terse emergency plan; approval first. |
@@ -42,6 +43,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
+- command-verification.md: source tags, **required**; purity-command-catalog.md: [doc] forms
 - activecluster-and-activedr.md / purity-versions-and-security.md: from Everpure docs
 - best-practices.md: configuration audit
 - flasharray.md / flashblade.md: objects, commands by tier, decommission

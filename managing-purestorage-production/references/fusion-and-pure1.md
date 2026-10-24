@@ -1,5 +1,8 @@
 # Pure Fusion MCP Server & Pure1
 
+> **Command verification status:** only the commands in purity-command-catalog.md were confirmed against Everpure documentation (`[doc]`). The Purity//FA CLI Reference Guide isn't public, so **every other Purity command in this skill is `[unverified]`** until confirmed on the array with `<command> --help`. See command-verification.md.
+
+
 ## Pure Fusion MCP Server
 - An open-source, stateless binary (macOS, Linux, Windows). Run it on an admin workstation or jump host. It sits on top of the FlashArray and FlashBlade REST APIs.
 - **Read-only by design (initial release):**

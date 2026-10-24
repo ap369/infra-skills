@@ -1,5 +1,8 @@
 # Health check (read-only, T0)
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 Report each item as a table row: **Check | Value | Status (OK/WARN/CRIT) | Source + timestamp**.
 
 | # | Check | ONTAP source | WARN | CRIT |

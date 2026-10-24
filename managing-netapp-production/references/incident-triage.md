@@ -1,5 +1,8 @@
 # Incident triage playbooks
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 During an incident, diagnosis is T0 and goes fast. The fix still goes through the change gate's **emergency path**: same steps, terse write-up, approval before execution. Urgency changes the format, not the safety.
 
 Order for every incident:

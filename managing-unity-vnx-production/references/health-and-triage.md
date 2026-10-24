@@ -1,5 +1,8 @@
 # Health check and incident triage
 
+> **Command verification status:** this skill hasn't been checked against Dell Unity/VNX documentation yet. **Every uemcli, naviseccli and nas_* command here is `[unverified]`** until confirmed on the target with `-help` (see command-verification.md). Treat them as pointers to the right command family, not exact syntax.
+
+
 ## Health check (T0)
 Report each item as a row: **Check | Value | Status (OK/WARN/CRIT) | Source + timestamp**.
 

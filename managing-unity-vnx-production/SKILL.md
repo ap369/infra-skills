@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing Dell Unity, Unity
 # Managing Unity / VNX in Production
 
 ## Overview
-Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice. **Never invent commands, flags, endpoints, tools or output:** tag commands `[doc]`/`[help]`/`[unverified]`; plans use only `[doc]`/`[help]`; unread values are `<not read>`.
 
 ## Access model
 - **Unity reads:** the community Unity MCP server (GET-only) or `uemcli ... show`, as a dedicated **Operator** (read-only) account, because the MCP passes the password on every call. Never enable write methods.
@@ -35,6 +35,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 ## Rationalizations
 | Thought | Reality |
 |---|---|
+| "I'm sure this command/flag exists" | Prove it: `[doc]` or help output this session. Otherwise `[unverified]`, never a plan step. |
 | "User said don't list them / just clean up" | Show a compact list anyway; approval covers listed IDs only. |
 | "Reply go and I'll delete the safe set" | The user can't approve objects they never saw. |
 | "Admin creds are saved, reads are harmless" | Use the read-only account. |
@@ -42,6 +43,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
+- command-verification.md: source tags, **required**
 - best-practices.md: configuration audit
 - unity.md / vnx.md: objects, commands by tier, pool-full relief, decommission
 - access-and-tools.md: Unity MCP risks, uemcli/naviseccli credentials

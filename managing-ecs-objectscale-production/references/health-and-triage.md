@@ -1,5 +1,8 @@
 # Health check and incident triage
 
+> **Command verification status:** this skill hasn't been checked against the ECS Management REST API reference yet. **Every API path, parameter and JSON body here is `[unverified]`** until confirmed in the API reference for your release (see command-verification.md). Treat them as pointers, not exact syntax.
+
+
 ## Health check (T0)
 Report each item as a row: **Check | Value | Status (OK/WARN/CRIT) | Source + timestamp**.
 

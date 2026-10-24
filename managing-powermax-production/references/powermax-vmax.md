@@ -1,5 +1,8 @@
 # PowerMax / VMAX reference (Solutions Enabler symcli, Unisphere for PowerMax)
 
+> **Command verification status:** symcli forms listed in symcli-command-catalog.md were confirmed against Dell's Solutions Enabler 10.4 / SnapVX 10.0 user guides and are `[doc]`. Everything else here, including new options on documented commands, is `[unverified]`. Confirm with `<command> -h` before use. See command-verification.md.
+
+
 Covers PowerMax 2000/8000/2500/8500 (PowerMaxOS 5978/10), VMAX All Flash 250F–950F and VMAX3 100K–400K (HYPERMAX OS 5977), and VMAX classic 10K/20K/40K (Enginuity 5876: thin pools, FAST VP, TimeFinder Clone/VP Snap instead of SnapVX). Syntax drifts between SE versions. Confirm with `<cmd> -h` before putting a command in a change plan. Add `-sid <SID>` to every command. Never rely on a default SID.
 
 ## Object model

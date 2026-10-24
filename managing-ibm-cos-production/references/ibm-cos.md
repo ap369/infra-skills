@@ -1,5 +1,8 @@
 # IBM Cloud Object Storage (Cleversafe dsNet, ClevOS 3.x) reference
 
+> **Command verification status:** only `viewSystem.adm` and `listVaults.adm` were seen in IBM sources. **Every other Manager API operation and parameter here is `[unverified]`** until confirmed in the Manager REST API guide for your ClevOS release (see command-verification.md).
+
+
 Components:
 - **Manager:** management UI and REST API.
 - **Accessers:** S3 endpoints, grouped in access pools.

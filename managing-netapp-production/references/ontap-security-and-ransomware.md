@@ -1,5 +1,8 @@
 # ONTAP security: ARP/AI, MAV, JIT, MFA, audit
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 Source: *ONTAP 9 documentation* PDF (2026-10-08). `pN` = PDF page. Every **enable / modify / disable / clear-suspect / restore** below is a change and goes through change-gate.md. The tiers given are this skill's tiers.
 
 ## Autonomous Ransomware Protection (ARP, ARP/AI)

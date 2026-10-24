@@ -1,5 +1,8 @@
 # Upgrades and migration: Pure Storage
 
+> **Command verification status:** only the commands in purity-command-catalog.md were confirmed against Everpure documentation (`[doc]`). The Purity//FA CLI Reference Guide isn't public, so **every other Purity command in this skill is `[unverified]`** until confirmed on the array with `<command> --help`. See command-verification.md.
+
+
 Use with references/upgrade-checklist.md (generic gates) and references/change-gate.md. Confirm the procedures against Pure's current documentation and support for your Purity version.
 
 ## Purity upgrades

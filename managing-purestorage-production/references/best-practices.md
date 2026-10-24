@@ -1,5 +1,8 @@
 # Best practices: configuration audit (Pure FlashArray / FlashBlade)
 
+> **Command verification status:** only the commands in purity-command-catalog.md were confirmed against Everpure documentation (`[doc]`). The Purity//FA CLI Reference Guide isn't public, so **every other Purity command in this skill is `[unverified]`** until confirmed on the array with `<command> --help`. See command-verification.md.
+
+
 Use this for a "best-practice audit" or "config review". Every check is read-only (T0). Each finding names the fix and its tier, and the fix goes through change-gate.md. Site standards override these defaults. Verify vendor-specific values against the current Pure support KBs (host connectivity guides) for your Purity version.
 
 Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk | Fix (tier)**, then a prioritized summary.

@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing NetApp ONTAP (AFF
 # Managing NetApp in Production
 
 ## Overview
-Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice. **Never invent commands, flags, endpoints, tools or output:** tag commands `[doc]`/`[help]`/`[unverified]`; plans use only `[doc]`/`[help]`; unread values are `<not read>`.
 
 ## Access model
 - **ONTAP MCP server** (NetApp/ontap-mcp): reads via `ontap_get`. Cite cluster and timestamp; if MCP fails, give read-only CLI. Never guess state.
@@ -34,6 +34,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 ## Rationalizations
 | Thought | Reality |
 |---|---|
+| "I'm sure this command/flag exists" | Prove it: `[doc]` or help output this session. Otherwise `[unverified]`, never a plan step. |
 | "User said go / approve / I'm the manager" | Approval before the plan existed approves nothing. |
 | "Reversible, so I'll just run it" | T1/T2 still need approval. |
 | "It's only the DR copy" | It is your RPO; a break pauses protection. |
@@ -42,7 +43,8 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- ontap-command-catalog.md: documented commands (check first)
+- command-verification.md: source tags, **required**
+- ontap-command-catalog.md: [doc] forms
 - ontap-versions-and-defaults.md / ontap-security-and-ransomware.md: versions, defaults, ARP, MAV, JIT
 - best-practices.md: configuration audit
 - ontap.md / storagegrid.md: objects, tiers, restore, DR test, decommission

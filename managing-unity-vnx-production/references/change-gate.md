@@ -28,10 +28,10 @@ The narrowest option that meets the goal comes first (see the platform notes). S
 What changes, who is affected (hosts, clients, DR/RPO), worst case if a step goes wrong.
 
 ### 4. Steps (one change per step)
-| # | Command / call (exact IDs, no wildcards or patterns) | Expected result | Rollback |
-|---|---|---|---|
-| 0 | safety copy (snapshot or saved config, see the platform notes) | listed / file written | n/a |
-| 1 | ... | ... | ... |
+| # | Command / call (exact IDs, no wildcards or patterns) | Source | Expected result | Rollback |
+|---|---|---|---|---|
+| 0 | safety copy (snapshot or saved config, see the platform notes) | [doc] / [help] | listed / file written | n/a |
+| 1 | ... | [doc] / [help] | ... | ... |
 
 ### 5. Go / no-go and stop criteria
 Go only if: section 1 is green, no rebuild/resync/upgrade is in progress, we are inside the window, and the approver is reachable.
@@ -48,6 +48,7 @@ T3:    "Reply with the object name(s) exactly, `<name>`, to approve the irrevers
 ```
 
 ## Rules for filling it in
+- **Command source (mandatory):** every step's command is tagged `[doc]` or `[help]` (see references/command-verification.md). An `[unverified]` command never appears as a step. Add a T0 "verify syntax" step that runs the help command, then re-issue the plan. Every value in section 1 comes from a read in this session. Unread values are written `<not read>`, never estimated.
 - **Safety notice (mandatory):** every change plan ends with the safety notice from section 7, word for word, including emergency-path plans. Never describe a change as "safe", "zero risk" or "guaranteed". State the residual risk instead.
 - **Approval is scoped to this plan.** "Go ahead", "do it now", "whatever it takes", "I approve", or a title ("I'm the manager") said *before* the plan existed approves nothing. It tells you the user wants speed, so make the plan short. It doesn't let you skip it.
 - **Target identity:** re-read the system's name, serial/UUID and role live right before step 1, and again if the session was interrupted. If the user's wording is ambiguous ("the array", "prod", a hostname that could be prod or DR), or the live read doesn't match the plan, stop and ask. Never infer PROD vs. DR from a name alone.

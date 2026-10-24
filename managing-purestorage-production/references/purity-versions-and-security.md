@@ -1,5 +1,8 @@
 # Purity versions, security bulletins, access and SAN practices
 
+> **Command verification status:** only the commands in purity-command-catalog.md were confirmed against Everpure documentation (`[doc]`). The Purity//FA CLI Reference Guide isn't public, so **every other Purity command in this skill is `[unverified]`** until confirmed on the array with `<command> --help`. See command-verification.md.
+
+
 Source: public Everpure documentation at support.everpuredata.com, retrieved 2026-10-13 (FlashArray Security, Directory Services on FlashArray, FlashArray Block Best Practices, FlashArray File Services, ActiveCluster/ActiveDR, and FlashArray security bulletins). The full **Purity//FA Admin and CLI Reference Guide is not public** (it needs a Pure1 login), so most CLI syntax in this skill is still unverified. Confirm it with `<command> --help` on the array.
 
 ## Feature / version facts

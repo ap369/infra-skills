@@ -1,5 +1,8 @@
 # Upgrades and migration: ECS / ObjectScale
 
+> **Command verification status:** this skill hasn't been checked against the ECS Management REST API reference yet. **Every API path, parameter and JSON body here is `[unverified]`** until confirmed in the API reference for your release (see command-verification.md). Treat them as pointers, not exact syntax.
+
+
 Use with references/upgrade-checklist.md (generic gates) and references/change-gate.md. Confirm against Dell's ECS / ObjectScale upgrade guides for your release.
 
 ## ECS upgrades

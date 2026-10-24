@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing IBM Cloud Object 
 # Managing IBM COS (Cleversafe) in Production
 
 ## Overview
-Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice. **Never invent commands, flags, endpoints, tools or output:** tag commands `[doc]`/`[help]`/`[unverified]`; plans use only `[doc]`/`[help]`; unread values are `<not read>`.
 
 ## Access model
 - **No MCP server exists** for on-prem dsNet. Read via shell: Manager `view*`/`list*` as a **Read Only** user, `aws s3api get-*`/`head-*` with a config-only profile. Cite device/vault and timestamp. Never guess state.
@@ -37,6 +37,7 @@ Margin = available devices − write threshold, for **every vault** on the set, 
 ## Rationalizations
 | Thought | Reality |
 |---|---|
+| "I'm sure this command/flag exists" | Prove it: `[doc]` or help output this session. Otherwise `[unverified]`, never a plan step. |
 | "Super User is saved, reads are harmless" | Use Read Only. Super User is never for reads. |
 | "Four at a time is faster" | Do the math with devices already down; never past margin − 1. |
 | "Remove the node to stop alerts" | Time-boxed mute or fail the drive; removal cuts the margin. |
@@ -44,6 +45,7 @@ Margin = available devices − write threshold, for **every vault** on the set, 
 
 ## References
 - change-gate.md: plan template, **required for any change**
+- command-verification.md: source tags, **required**
 - best-practices.md: configuration audit
 - ibm-cos.md: IDA, objects, tiers, maintenance, retention
 - access-and-tools.md: Read Only identities, Manager API, secrets

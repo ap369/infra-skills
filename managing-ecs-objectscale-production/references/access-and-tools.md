@@ -1,5 +1,8 @@
 # Access: management API, S3 CLI, credentials
 
+> **Command verification status:** this skill hasn't been checked against the ECS Management REST API reference yet. **Every API path, parameter and JSON body here is `[unverified]`** until confirmed in the API reference for your release (see command-verification.md). Treat them as pointers, not exact syntax.
+
+
 There is no MCP server for ECS / ObjectScale, from Dell or the community. Claude reads through its shell tool.
 
 ## Read path

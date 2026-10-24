@@ -1,5 +1,8 @@
 # Best practices: configuration audit (ONTAP / StorageGRID)
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 Use this for a "best-practice audit" or "config review". Every check is read-only (T0) via `ontap_get` or the CLI. Each finding names the fix and its tier, and the fix goes through change-gate.md. Site standards override these defaults. Verify against NetApp TRs and Digital Advisor (Active IQ) wellness findings for your ONTAP release. **Digital Advisor's risk list is the first input to any audit.**
 
 Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk | Fix (tier)**, then a prioritized summary.

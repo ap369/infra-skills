@@ -5,6 +5,7 @@
   the platform notes below MARKER are kept as-is)
 - shared/incident-comms.md     -> <skill>/references/incident-comms.md (whole file)
 - shared/upgrade-checklist.md -> <skill>/references/upgrade-checklist.md (whole file)
+- shared/command-verification.md -> <skill>/references/command-verification.md (whole file)
 
 Run from the repo root: python3 scripts/sync_shared.py [--check]
 --check exits 1 if any copy is out of date (used by CI).
@@ -24,7 +25,7 @@ def expected_gate(core: str, current: str) -> str:
 def main() -> int:
     check = "--check" in sys.argv
     core = (ROOT / "shared/change-gate-core.md").read_text()
-    whole_files = {name: (ROOT / "shared" / name).read_text() for name in ("incident-comms.md", "upgrade-checklist.md")}
+    whole_files = {name: (ROOT / "shared" / name).read_text() for name in ("incident-comms.md", "upgrade-checklist.md", "command-verification.md")}
     stale = []
     for skill in sorted(ROOT.glob("managing-*")):
         refs = skill / "references"

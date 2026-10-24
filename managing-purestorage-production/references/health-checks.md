@@ -1,5 +1,8 @@
 # Health check (read-only, T0)
 
+> **Command verification status:** only the commands in purity-command-catalog.md were confirmed against Everpure documentation (`[doc]`). The Purity//FA CLI Reference Guide isn't public, so **every other Purity command in this skill is `[unverified]`** until confirmed on the array with `<command> --help`. See command-verification.md.
+
+
 Run in this order and report each item as a table row: **Check | Value | Status (OK/WARN/CRIT) | Source + timestamp**.
 
 | # | Check | FlashArray source | WARN | CRIT |

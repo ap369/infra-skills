@@ -1,5 +1,8 @@
 # Health check and incident triage
 
+> **Command verification status:** only `viewSystem.adm` and `listVaults.adm` were seen in IBM sources. **Every other Manager API operation and parameter here is `[unverified]`** until confirmed in the Manager REST API guide for your ClevOS release (see command-verification.md).
+
+
 ## Health check (T0)
 Report each item as a row: **Check | Value | Status (OK/WARN/CRIT) | Source + timestamp**.
 

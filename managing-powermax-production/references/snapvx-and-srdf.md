@@ -1,5 +1,8 @@
 # SnapVX and SRDF (from Dell public documentation)
 
+> **Command verification status:** symcli forms listed in symcli-command-catalog.md were confirmed against Dell's Solutions Enabler 10.4 / SnapVX 10.0 user guides and are `[doc]`. Everything else here, including new options on documented commands, is `[unverified]`. Confirm with `<command> -h` before use. See command-verification.md.
+
+
 Sources (public PDFs at dl.dell.com, retrieved 2026-10-14):
 - *Solutions Enabler 10.0.0 TimeFinder SnapVX CLI User Guide* (Jul 2022, the latest SnapVX guide; 10.4 has no SnapVX CLI changes)
 - *Solutions Enabler 10.4.0 SRDF Family CLI User Guide* (Apr 2026)

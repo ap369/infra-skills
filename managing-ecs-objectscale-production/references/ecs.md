@@ -1,5 +1,8 @@
 # ECS / ObjectScale reference (ECS 3.6–3.8, ObjectScale 4.x on ECS hardware)
 
+> **Command verification status:** this skill hasn't been checked against the ECS Management REST API reference yet. **Every API path, parameter and JSON body here is `[unverified]`** until confirmed in the API reference for your release (see command-verification.md). Treat them as pointers, not exact syntax.
+
+
 APIs:
 - **Management REST API** on `https://<node>:4443`. Get a token from `GET /login` (basic auth), which returns the `X-SDS-AUTH-TOKEN` header, and release it with `GET /logout`.
 - **S3 data API** on `https://<lb>:9021` (HTTP 9020).

@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing Dell ECS or Objec
 # Managing ECS / ObjectScale in Production
 
 ## Overview
-Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice. **Never invent commands, flags, endpoints, tools or output:** tag commands `[doc]`/`[help]`/`[unverified]`; plans use only `[doc]`/`[help]`; unread values are `<not read>`.
 
 ## Access model
 - **No MCP server exists.** Read via shell: Management API `GET`s as a **System Monitor** user, and `aws s3api get-*` with a config-only profile. Cite VDC and timestamp. Never guess state.
@@ -36,6 +36,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 ## Rationalizations
 | Thought | Reality |
 |---|---|
+| "I'm sure this command/flag exists" | Prove it: `[doc]` or help output this session. Otherwise `[unverified]`, never a plan step. |
 | "User asked for the new key, so paste it" | It lands in the transcript. Vault or secure channel. |
 | "Adding a key is harmless, just do it" | T1 still needs the plan; in an emergency one reply approves it. |
 | "The admin token is already saved" | Reads use System Monitor. |
@@ -43,6 +44,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
+- command-verification.md: source tags, **required**
 - best-practices.md: configuration audit
 - ecs.md: objects, API reads, tiers, decommission, lifecycle, Object Lock, leaked keys
 - access-and-tools.md: read-only identities, tokens, secrets

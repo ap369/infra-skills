@@ -1,5 +1,8 @@
 # StorageGRID reference (11.x)
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 APIs: Grid Manager `https://<admin-node>/api/v4/...` (grid-wide). Tenant Manager uses the same API, scoped to one tenant account. Confirm the version with `/api/versions`.
 
 ## Object model

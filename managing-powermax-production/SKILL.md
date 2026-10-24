@@ -6,7 +6,7 @@ description: Use when inspecting, troubleshooting, or changing Dell PowerMax or 
 # Managing PowerMax / VMAX in Production
 
 ## Overview
-Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice.
+Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice. **Never invent commands, flags, endpoints, tools or output:** tag commands `[doc]`/`[help]`/`[unverified]`; plans use only `[doc]`/`[help]`; unread values are `<not read>`.
 
 ## Access model
 - **Reads:** read-only symcli (`list`, `show`, `query`, `verify`, `symevent`, `symaudit`, `symstat`) as a **Monitor-role** identity. Always pass `-sid`. Cite SID and timestamp. If the CLI fails, say so. Never guess state.
@@ -35,6 +35,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 ## Rationalizations
 | Thought | Reality |
 |---|---|
+| "I'm sure this command/flag exists" | Prove it: `[doc]` or help output this session. Otherwise `[unverified]`, never a plan step. |
 | "User said do it now / I'm the lead" | Approval before the plan existed approves nothing. |
 | "Safety snapshot is optional" | Step 0 of every T3. Skip only with a stated reason. |
 | "Unmask and deallocate together saves time" | Unmask is reversible, deallocate isn't. Separate approvals. |
@@ -42,6 +43,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
+- command-verification.md: source tags, **required**; symcli-command-catalog.md: [doc] forms
 - snapvx-and-srdf.md / powermax-security-and-versions.md: Dell docs
 - best-practices.md: configuration audit
 - powermax-vmax.md: objects, tiers, decommission, SRDF recovery

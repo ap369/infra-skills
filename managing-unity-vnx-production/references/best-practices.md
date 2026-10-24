@@ -1,5 +1,8 @@
 # Best practices: configuration audit (Unity / VNX)
 
+> **Command verification status:** this skill hasn't been checked against Dell Unity/VNX documentation yet. **Every uemcli, naviseccli and nas_* command here is `[unverified]`** until confirmed on the target with `-help` (see command-verification.md). Treat them as pointers to the right command family, not exact syntax.
+
+
 Use this for a "best-practice audit" or "config review". Every check is read-only (T0) through the GET-only MCP, `uemcli ... show`, or `naviseccli` list commands, run as a read-only account. Each finding names the fix and its tier, and the fix goes through change-gate.md. Site standards override these defaults. Verify against Dell's Unity best-practices guide and host connectivity guides for your OE.
 
 Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk | Fix (tier)**, then a prioritized summary.

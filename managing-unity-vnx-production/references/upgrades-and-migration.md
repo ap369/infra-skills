@@ -1,5 +1,8 @@
 # Upgrades and migration: Unity / VNX
 
+> **Command verification status:** this skill hasn't been checked against Dell Unity/VNX documentation yet. **Every uemcli, naviseccli and nas_* command here is `[unverified]`** until confirmed on the target with `-help` (see command-verification.md). Treat them as pointers to the right command family, not exact syntax.
+
+
 Use with references/upgrade-checklist.md (generic gates) and references/change-gate.md. Confirm against Dell's Unity OE release notes, the host connectivity guides and E-Lab interoperability.
 
 ## Unity OE upgrades

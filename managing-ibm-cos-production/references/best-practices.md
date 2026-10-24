@@ -1,5 +1,8 @@
 # Best practices: configuration audit (IBM COS / Cleversafe dsNet)
 
+> **Command verification status:** only `viewSystem.adm` and `listVaults.adm` were seen in IBM sources. **Every other Manager API operation and parameter here is `[unverified]`** until confirmed in the Manager REST API guide for your ClevOS release (see command-verification.md).
+
+
 Use this for a "best-practice audit" or "config review". Every check is read-only (T0): Manager `view*`/`list*` as the Read Only user and `s3api get-*` with the `cos-ro` profile. Each finding names the fix and its tier, and the fix goes through change-gate.md. Site standards override these defaults. Verify against IBM's COS (dsNet) configuration and security guides for your ClevOS release.
 
 Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk | Fix (tier)**, then a prioritized summary.

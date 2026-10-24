@@ -1,5 +1,8 @@
 # ONTAP versions, features and defaults
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 Source: *ONTAP 9 documentation* PDF (NetApp, generated 2026-10-08, covers up to 9.19.1). `pN` = PDF page. Always check the live version first (`version`, `cluster image show`). A feature is only usable when **every** node runs the release that introduced it, because the cluster version is the lowest node version (p302).
 
 ## Release support policy (p148–149)

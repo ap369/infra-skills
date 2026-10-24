@@ -1,5 +1,8 @@
 # ActiveCluster and ActiveDR (from Everpure public documentation)
 
+> **Command verification status:** only the commands in purity-command-catalog.md were confirmed against Everpure documentation (`[doc]`). The Purity//FA CLI Reference Guide isn't public, so **every other Purity command in this skill is `[unverified]`** until confirmed on the array with `<command> --help`. See command-verification.md.
+
+
 Source: public documentation at support.everpuredata.com (Pure Storage is now **Everpure**). Retrieved 2026-10-13: the *ActiveCluster*, *ActiveDR*, *ActiveCluster with VMware*, *ActiveDR with VMware* and *Oracle DR with ActiveDR* guides. Summarized in our own words. Check the current guide for your Purity//FA release before acting. Every promote, demote, stretch, unstretch or preference change is a change and goes through change-gate.md.
 
 ## Common requirements

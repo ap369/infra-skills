@@ -1,5 +1,8 @@
 # Unity / Unity XT reference (Unisphere, uemcli, REST)
 
+> **Command verification status:** this skill hasn't been checked against Dell Unity/VNX documentation yet. **Every uemcli, naviseccli and nas_* command here is `[unverified]`** until confirmed on the target with `-help` (see command-verification.md). Treat them as pointers to the right command family, not exact syntax.
+
+
 Syntax drifts between OE versions. Confirm with `uemcli -d <mgmt> <object> -help` before putting a command in a change plan.
 
 ## Object model

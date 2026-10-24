@@ -1,5 +1,8 @@
 # Access: Unity MCP, uemcli, naviseccli
 
+> **Command verification status:** this skill hasn't been checked against Dell Unity/VNX documentation yet. **Every uemcli, naviseccli and nas_* command here is `[unverified]`** until confirmed on the target with `-help` (see command-verification.md). Treat them as pointers to the right command family, not exact syntax.
+
+
 ## Unity: community MCP server (sachdev27/dell-unity-mcp-server)
 - A community project (MIT, low adoption), not Dell-supported. It auto-generates tools from the Unity OpenAPI spec.
 - **GET-only by default** (`ALLOWED_HTTP_METHODS=GET`). Never set POST/PUT/DELETE for production. Changes go through the change plan and uemcli.

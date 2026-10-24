@@ -1,5 +1,8 @@
 # Upgrades and migration: IBM COS (Cleversafe)
 
+> **Command verification status:** only `viewSystem.adm` and `listVaults.adm` were seen in IBM sources. **Every other Manager API operation and parameter here is `[unverified]`** until confirmed in the Manager REST API guide for your ClevOS release (see command-verification.md).
+
+
 Use with references/upgrade-checklist.md (generic gates) and references/change-gate.md. Confirm against IBM's ClevOS upgrade documentation for your release.
 
 ## ClevOS upgrades

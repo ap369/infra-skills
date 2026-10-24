@@ -1,5 +1,8 @@
 # Upgrades and migration: PowerMax / VMAX
 
+> **Command verification status:** symcli forms listed in symcli-command-catalog.md were confirmed against Dell's Solutions Enabler 10.4 / SnapVX 10.0 user guides and are `[doc]`. Everything else here, including new options on documented commands, is `[unverified]`. Confirm with `<command> -h` before use. See command-verification.md.
+
+
 Use with references/upgrade-checklist.md (generic gates) and references/change-gate.md. Confirm against Dell's PowerMaxOS / HYPERMAX OS release notes, the Dell host connectivity guides and E-Lab interoperability for your code.
 
 ## Code upgrades

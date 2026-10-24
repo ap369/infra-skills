@@ -1,5 +1,8 @@
 # Best practices: configuration audit (PowerMax / VMAX)
 
+> **Command verification status:** symcli forms listed in symcli-command-catalog.md were confirmed against Dell's Solutions Enabler 10.4 / SnapVX 10.0 user guides and are `[doc]`. Everything else here, including new options on documented commands, is `[unverified]`. Confirm with `<command> -h` before use. See command-verification.md.
+
+
 Use this for a "best-practice audit" or "config review". Every check is read-only (T0) symcli or Unisphere REST, run as the Monitor identity. Each finding names the fix and its tier, and the fix goes through change-gate.md. Site standards override these defaults. Verify against Dell's PowerMax best-practice guides and host connectivity guides for your PowerMaxOS / HYPERMAX OS.
 
 Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk | Fix (tier)**, then a prioritized summary.

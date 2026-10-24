@@ -1,5 +1,8 @@
 # Incident triage playbooks
 
+> **Command verification status:** only the commands in purity-command-catalog.md were confirmed against Everpure documentation (`[doc]`). The Purity//FA CLI Reference Guide isn't public, so **every other Purity command in this skill is `[unverified]`** until confirmed on the array with `<command> --help`. See command-verification.md.
+
+
 During an incident, diagnosis is T0 and goes fast. The fix still goes through the change gate, using its **emergency path**: same steps, terse write-up, one confirmation per step. Urgency changes the format, not the safety.
 
 Order for every incident:

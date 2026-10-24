@@ -1,5 +1,8 @@
 # ONTAP documented command catalog
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 The commands below appear in the *ONTAP 9 documentation* PDF (2026-10-08). Prefer these forms in change plans, and still confirm parameters with `<command> ?` on the target release. The PDF doesn't include the full man-page reference, so a command missing here may still exist. **Read** = T0. Everything else is a change, tiered per SKILL.md.
 
 ## Corrections: use the documented form

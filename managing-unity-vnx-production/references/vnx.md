@@ -1,5 +1,8 @@
 # VNX reference (VNX1 / VNX2, Block OE 5.32/5.33, File OE 7.x/8.x)
 
+> **Command verification status:** this skill hasn't been checked against Dell Unity/VNX documentation yet. **Every uemcli, naviseccli and nas_* command here is `[unverified]`** until confirmed on the target with `-help` (see command-verification.md). Treat them as pointers to the right command family, not exact syntax.
+
+
 **VNX is end of life.** Upgrades, parts and support contracts may be limited, so check the support status before planning any NDU or hardware action. Syntax drifts between OE versions. Confirm with `naviseccli -help <cmd>` and `<nas_cmd> -help`.
 
 ## Object model

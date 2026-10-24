@@ -1,5 +1,8 @@
 # Health check and incident triage
 
+> **Command verification status:** symcli forms listed in symcli-command-catalog.md were confirmed against Dell's Solutions Enabler 10.4 / SnapVX 10.0 user guides and are `[doc]`. Everything else here, including new options on documented commands, is `[unverified]`. Confirm with `<command> -h` before use. See command-verification.md.
+
+
 ## Health check (T0)
 Report each item as a row: **Check | Value | Status (OK/WARN/CRIT) | Source + timestamp**.
 

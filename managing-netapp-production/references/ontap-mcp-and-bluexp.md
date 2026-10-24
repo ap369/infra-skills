@@ -1,5 +1,8 @@
 # ONTAP MCP server, BlueXP and monitoring tools
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 ## ONTAP MCP server (github.com/NetApp/ontap-mcp)
 - Official NetApp server, distributed as a container: `ghcr.io/netapp/ontap-mcp:latest`. It runs as an HTTP MCP server on port 8083.
 - Clusters are listed in `ontap.yaml` under `Pollers:`. Each one has `addr`, `username`, and either `password` or `credentials_script`. Set `use_insecure_tls` to false in production.

@@ -1,5 +1,8 @@
 # FlashBlade reference (Purity//FB 4.x)
 
+> **Command verification status:** only the commands in purity-command-catalog.md were confirmed against Everpure documentation (`[doc]`). The Purity//FA CLI Reference Guide isn't public, so **every other Purity command in this skill is `[unverified]`** until confirmed on the array with `<command> --help`. See command-verification.md.
+
+
 Confirm CLI syntax with `--help` on the target blade. REST 2.x is the stable contract.
 
 ## Object model

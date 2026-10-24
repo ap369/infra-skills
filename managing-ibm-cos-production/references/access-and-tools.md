@@ -1,5 +1,8 @@
 # Access: Manager REST API, S3 CLI, credentials
 
+> **Command verification status:** only `viewSystem.adm` and `listVaults.adm` were seen in IBM sources. **Every other Manager API operation and parameter here is `[unverified]`** until confirmed in the Manager REST API guide for your ClevOS release (see command-verification.md).
+
+
 There is no MCP server for on-prem IBM COS / Cleversafe dsNet. The community and CData servers target **IBM Cloud** COS and don't speak to a dsNet Manager. Claude reads through its shell.
 
 ## Read path

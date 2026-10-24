@@ -1,5 +1,8 @@
 # Best practices: configuration audit (ECS / ObjectScale)
 
+> **Command verification status:** this skill hasn't been checked against the ECS Management REST API reference yet. **Every API path, parameter and JSON body here is `[unverified]`** until confirmed in the API reference for your release (see command-verification.md). Treat them as pointers, not exact syntax.
+
+
 Use this for a "best-practice audit" or "config review". Every check is read-only (T0): Management API GETs as System Monitor and `s3api get-*` with the config-only profile. Each finding names the fix and its tier, and the fix goes through change-gate.md. Site standards override these defaults. Verify against Dell's ECS best-practices and security configuration guides for your release.
 
 Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk | Fix (tier)**, then a prioritized summary.

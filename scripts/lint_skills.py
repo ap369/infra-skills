@@ -19,8 +19,8 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
-SOFT_WORDS, HARD_WORDS = 500, 600
-REQUIRED_REFS = {"change-gate.md", "best-practices.md", "incident-comms.md", "upgrade-checklist.md", "upgrades-and-migration.md"}
+SOFT_WORDS, HARD_WORDS = 550, 650  # raised for the mandatory command-verification rule
+REQUIRED_REFS = {"change-gate.md", "best-practices.md", "incident-comms.md", "upgrade-checklist.md", "upgrades-and-migration.md", "command-verification.md"}
 
 
 def frontmatter(text):

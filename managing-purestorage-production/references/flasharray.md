@@ -1,5 +1,8 @@
 # FlashArray reference (Purity//FA 6.x)
 
+> **Command verification status:** only the commands in purity-command-catalog.md were confirmed against Everpure documentation (`[doc]`). The Purity//FA CLI Reference Guide isn't public, so **every other Purity command in this skill is `[unverified]`** until confirmed on the array with `<command> --help`. See command-verification.md.
+
+
 Syntax drifts between Purity releases. Confirm with `<command> --help` on the target array before putting a command in a change plan.
 
 ## Object model

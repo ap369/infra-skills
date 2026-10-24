@@ -1,5 +1,8 @@
 # ONTAP reference (AFF / FAS / ASA, ONTAP 9.x)
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 Syntax drifts between ONTAP releases. Confirm with `<command> ?` or the REST docs (`https://<cluster>/docs/api`) before putting a command in a change plan. Commands marked *(adv)* need `set -privilege advanced`, and that privilege change belongs inside the change plan.
 
 ## Object model

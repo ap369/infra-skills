@@ -1,5 +1,8 @@
 # Upgrades and migration: NetApp
 
+> **Command verification status:** ONTAP CLI forms in this skill were cross-checked against NetApp's *ONTAP 9 documentation* (2026-10-08, ONTAP 9.19.1). Commands listed in ontap-command-catalog.md, and ones that match it, are `[doc]`. Any other form, or a new parameter, is `[unverified]`. Confirm parameters on the target with `<command> ?` before use. See command-verification.md.
+
+
 Use with references/upgrade-checklist.md (generic gates) and references/change-gate.md. Confirm against NetApp's upgrade documentation, Digital Advisor's Upgrade Advisor and the Interoperability Matrix Tool (IMT) for your release.
 
 ## ONTAP upgrades (ANDU)

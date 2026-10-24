@@ -1,5 +1,8 @@
 # PowerMax security, access roles and versions (from Dell public documentation)
 
+> **Command verification status:** symcli forms listed in symcli-command-catalog.md were confirmed against Dell's Solutions Enabler 10.4 / SnapVX 10.0 user guides and are `[doc]`. Everything else here, including new options on documented commands, is `[unverified]`. Confirm with `<command> -h` before use. See command-verification.md.
+
+
 Sources (public PDFs at dl.dell.com, retrieved 2026-10-14):
 - *PowerMax Family Security Configuration Guide, PowerMaxOS 10* (Apr 2026)
 - *Solutions Enabler 10.4.0 Array Controls and Management CLI User Guide* (Apr 2026)
