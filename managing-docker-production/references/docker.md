@@ -11,7 +11,7 @@
 - **Multi-stage builds** keep build tools out of the final image.
 - **Pin base images**, by digest for full supply-chain integrity ("even if a publisher replaces the tag with a new image"). Rebuild regularly with `docker build --pull` (fresh base) and `--no-cache` for clean dependency updates.
 - `.dockerignore` keeps secrets and junk out of the build context.
-- **Secrets:** never in `ENV` or `ARG` (they persist in the image and its history). Use build secrets: `docker build --secret id=<id>,src=<file> .` and `RUN --mount=type=secret,...` in the Dockerfile.
+- **Secrets:** never in `ENV` or `ARG` (they persist in the image and its history). Use build secrets (docs.docker.com *Build secrets*): `docker build --secret id=<id>,src=<file> .` `[doc]`, and in the Dockerfile `RUN --mount=type=secret,id=<id> <command reading /run/secrets/<id>>` `[doc]` (the secret is mounted at `/run/secrets/<id>` by default; `target=<path>` mounts it elsewhere, e.g. `RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm ci`).
 - Run as a non-root `USER`; one service per image; a `HEALTHCHECK` (or orchestrator probes).
 - Production references use an **immutable tag or digest**, never `latest`.
 

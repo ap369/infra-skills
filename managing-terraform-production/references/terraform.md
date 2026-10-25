@@ -33,7 +33,15 @@ terraform apply <ticket>.tfplan                                  [doc]   (the re
 
 ## Lifecycle rules (language docs)
 - **`prevent_destroy = true`:** plans that would destroy the object fail. **It does not protect against removing the resource block**: if the configuration is removed, Terraform destroys the object ("This rule doesn't prevent Terraform from destroying a resource if you remove its configuration"). Review deletions of resource blocks as T3.
-- **`removed` block:** by default "Terraform removes the resource from state and destroys the actual resource". Set `lifecycle { destroy = false }` to only forget it.
+- **`removed` block:** by default "Terraform removes the resource from state and destroys the actual resource". Set `lifecycle { destroy = false }` to only forget it. Documented form (HashiCorp *Remove a resource from state*): replace the `resource` block with
+  ```hcl
+  removed {
+    from = <resource address, without instance keys>
+    lifecycle {
+      destroy = false
+    }
+  }
+  ```
 - **`ignore_changes`:** for attributes managed outside Terraform. Overuse hides drift.
 - **`import` block:** brings an existing object under management; the plan shows what Terraform would change on import. Check that the plan has **no** changes to imported objects before applying.
 

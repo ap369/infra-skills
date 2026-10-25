@@ -26,7 +26,7 @@
 - **`Delete` reclaim policy:** "deletion removes both the PersistentVolume object from Kubernetes, as well as the associated storage asset in the external infrastructure." Dynamically provisioned volumes inherit the StorageClass reclaim policy (usually `Delete`).
 - **`Retain`:** when the PVC is deleted the PV stays "released" with its data; an administrator reclaims it manually.
 - **Storage Object in Use Protection:** a PVC in use by a pod, or a PV bound to a PVC, isn't removed while in use: deletion waits (`Terminating`). Don't force it.
-- Before deleting a PVC that holds data: read the bound PV's reclaim policy (`kubectl get pv <pv> -o jsonpath='{.spec.persistentVolumeReclaimPolicy}'` `[doc]`), switch it to `Retain` (T2), take an array snapshot through the storage skill, then delete (T3).
+- Before deleting a PVC that holds data: read the bound PV's reclaim policy (`kubectl get pv <pv> -o jsonpath='{.spec.persistentVolumeReclaimPolicy}'` `[doc]`), switch it to `Retain` (T2) with the form from kubernetes.io *Change the Reclaim Policy of a PersistentVolume*: `kubectl --context <ctx> patch pv <pv> -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'` `[doc]`, read it back, take an array snapshot through the storage skill, then delete (T3).
 - CSI drivers map PVs to array objects (NetApp Trident, Pure Portworx, Dell CSM for PowerMax / Unity…). Find the array volume behind a PV in `spec.csi.volumeHandle` and check it with the matching storage skill before any T3 storage step. Driver-specific commands and parameters are `[unverified]` here: use the driver's own documentation.
 - PVC expansion works only if the StorageClass allows volume expansion; shrinking isn't supported.
 
