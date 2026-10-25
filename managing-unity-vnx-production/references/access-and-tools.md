@@ -1,6 +1,6 @@
 # Access: Unity MCP, uemcli, naviseccli
 
-> **Command verification status:** this skill hasn't been checked against Dell Unity/VNX documentation yet. **Every uemcli, naviseccli and nas_* command here is `[unverified]`** until confirmed on the target with `-help` (see command-verification.md). Treat them as pointers to the right command family, not exact syntax.
+> **Command verification status:** uemcli forms were checked against Dell's *Unisphere CLI User Guide* 5.5.5 (unity-command-catalog.md) and naviseccli forms against the *VNX CLI Reference for Block* 5.33 (vnx-command-catalog.md): forms listed there are `[doc]`. **VNX File commands (`nas_*`, `server_*`, `fs_*`) are still `[unverified]`** (no public File CLI reference). Confirm switches on the target with `-help`.
 
 
 ## Unity: community MCP server (sachdev27/dell-unity-mcp-server)

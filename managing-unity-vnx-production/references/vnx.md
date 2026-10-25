@@ -1,9 +1,11 @@
 # VNX reference (VNX1 / VNX2, Block OE 5.32/5.33, File OE 7.x/8.x)
 
-> **Command verification status:** this skill hasn't been checked against Dell Unity/VNX documentation yet. **Every uemcli, naviseccli and nas_* command here is `[unverified]`** until confirmed on the target with `-help` (see command-verification.md). Treat them as pointers to the right command family, not exact syntax.
+> **Command verification status:** uemcli forms were checked against Dell's *Unisphere CLI User Guide* 5.5.5 (unity-command-catalog.md) and naviseccli forms against the *VNX CLI Reference for Block* 5.33 (vnx-command-catalog.md): forms listed there are `[doc]`. **VNX File commands (`nas_*`, `server_*`, `fs_*`) are still `[unverified]`** (no public File CLI reference). Confirm switches on the target with `-help`.
 
 
 **VNX is end of life.** Upgrades, parts and support contracts may be limited, so check the support status before planning any NDU or hardware action. Syntax drifts between OE versions. Confirm with `naviseccli -help <cmd>` and `<nas_cmd> -help`.
+
+**Never add `-o` to a naviseccli change:** it "executes the command without prompting for confirmation" (vnx-command-catalog.md). `unbind` and `lun -destroy` destroy all data on the LUN; `trespass` with active I/O may cause I/O errors.
 
 ## Object model
 
@@ -33,7 +35,7 @@ Block:
 naviseccli -h <SPA> getagent ; naviseccli -h <SPB> getagent        # revision, serial, both SPs
 naviseccli -h <SPA> faults -list ; getcrus ; getlog -100
 naviseccli -h <SPA> storagepool -list -prcntFull -availableCap -consumedCap
-naviseccli -h <SPA> lun -list -default -owner -curowner           # pool LUN ownership (check flags with -help)
+naviseccli -h <SPA> lun -list -default -owner                     # pool LUNs: -default = default owner, -owner = current owner
 naviseccli -h <SPA> getlun -owner -default -trespass              # RAID-group LUNs
 naviseccli -h <SPA> storagegroup -list -host                      # masking
 naviseccli -h <SPA> port -list -hba                               # host initiators logged in
@@ -56,8 +58,8 @@ nas_replicate -list ; nas_replicate -info -all
 | T1 | `spcollect` | Diagnostic, adds SP load. Fine during an incident. Tell the user it was run. |
 | T2 | Trespass LUNs back to their default owner (`trespass mine` sent to the owning SP, or `trespass lun <n>`) | Only after the SP has a confirmed healthy state and host paths are verified. Trespass again to roll back. |
 | T2 | Expand LUN / FS, export option changes, FAST Cache enable | Record the old values |
-| T3 | Remove LUN/host from a storage group, destroy LUN / FS | Host outage, or **NONE** (data gone) |
-| T3 | Snapshot rollback / checkpoint restore | Overwrites newer data |
+| T3 | Remove LUN/host from a storage group (`storagegroup -removehlu -gname <sg> -hlu <n>`), destroy LUN (`lun -destroy` / `unbind`) / FS | Host outage, or **NONE** (data gone) |
+| T3 | Snapshot rollback (`snap -restore -id <snap> -bakName <backup>`) / checkpoint restore | Overwrites newer data; `-bakName` keeps a backup snapshot of the current state |
 | T3 | MirrorView fracture/promote, Replicator failover/switchover/reverse | DR runbook only |
 | T3 | Data Mover failover, SP reboot, NDU / OE upgrade | Dell support. NDU reboots each SP in turn, trespassing everything twice. |
 
