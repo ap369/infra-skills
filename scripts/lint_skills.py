@@ -82,6 +82,9 @@ def main():
     sync = subprocess.run([sys.executable, str(ROOT / "scripts/sync_shared.py"), "--check"], capture_output=True, text=True)
     if sync.returncode != 0:
         errors.append("shared copies out of sync: " + sync.stdout.strip() + " (run python3 scripts/sync_shared.py)")
+    flags = subprocess.run([sys.executable, str(ROOT / "scripts/check_cli_flags.py")], capture_output=True, text=True)
+    if flags.returncode != 0:
+        errors.append("undocumented CLI flags: " + flags.stdout.strip().replace(chr(10), "; "))
     for w in warnings:
         print(f"WARN  {w}")
     for e in errors:

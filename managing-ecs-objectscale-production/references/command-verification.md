@@ -33,6 +33,14 @@ If you're unsure whether something is `[doc]`, it's `[unverified]`. A similar do
 | VNX | `naviseccli -help <command>`, `<nas_cmd> -help` |
 | ECS / ObjectScale API | the Management REST API reference for the exact release. Use only paths in this skill's references, or ones the user confirms from that reference. |
 | IBM COS Manager API | the Manager REST API / Developer Guide for the installed ClevOS release |
+| Docker / Compose | `docker <command> --help`, `docker compose <command> --help`, `docker version` |
+| Kubernetes | `kubectl <command> --help`, `kubectl explain <resource>[.field]` (schema from the live API server), `kubectl api-resources`, `kubectl version` |
+| Helm | `helm <command> --help`, `helm version` |
+| Terraform | `terraform <command> -help`, `terraform version`, `terraform providers` (provider docs for the locked version) |
+| Argo CD / Flux | `argocd <command> --help`, `flux <command> --help`, `flux version` |
+| Prometheus / Alertmanager | `promtool --help`, `amtool --help`, `/api/v1/status/buildinfo` |
+| Icinga 2 | `icinga2 <command> --help`, `icinga2 --version`; API: `GET /v1/types` for object types and attributes |
+| Dynatrace | the API reference page for the endpoint (scopes listed there); `monaco <command> --help` |
 | Any MCP server | **only tool names present in the session's tool list**, called with their declared input schema. Never guess a tool name. |
 
 ## 4. Never invent output or state

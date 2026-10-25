@@ -44,7 +44,7 @@ Reads that prove the change worked and nothing else changed.
 T1/T2: "Reply **approve** to execute steps 0–N."
 T3:    "Reply with the object name(s) exactly, `<name>`, to approve the irreversible/disruptive step(s)."
 
-> ⚠️ **Safety notice:** no change to a production array is 100% safe. These commands were prepared by an AI agent and are not vendor-validated for this system. Read every command, confirm that backups and the rollback path exist, and approve only if you accept responsibility for the outcome. For T3 changes, a second qualified reviewer (or vendor support) is strongly recommended.
+> ⚠️ **Safety notice:** no change to a production system is 100% safe. These commands were prepared by an AI agent and are not vendor-validated for this system. Read every command, confirm that backups and the rollback path exist, and approve only if you accept responsibility for the outcome. For T3 changes, a second qualified reviewer (or vendor support) is strongly recommended.
 ```
 
 ## Rules for filling it in

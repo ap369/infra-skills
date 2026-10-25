@@ -8,7 +8,7 @@
 Agent skills (Claude Code, OpenCode) for operating infrastructure in production.
 
 > [!CAUTION]
-> ## ⚠️ READ BEFORE USING THESE SKILLS ON ANY ARRAY ⚠️
+> ## ⚠️ READ BEFORE USING THESE SKILLS ON ANY PRODUCTION SYSTEM ⚠️
 > **Modifying a production storage array is never 100% safe, with or without these skills.** A single wrong command can cause an outage or **permanent, unrecoverable data loss** across every host, application and site that depends on the array.
 >
 > - **These skills reduce risk. They don't eliminate it.** Approval gates, safety snapshots, staged deletes and read-only defaults lower the chance of a mistake, but they can't guarantee a safe outcome.
@@ -29,6 +29,11 @@ Agent skills (Claude Code, OpenCode) for operating infrastructure in production.
 | `managing-unity-vnx-production` | Dell Unity / Unity XT and VNX (block and file). Unity via a GET-only community MCP server plus uemcli; VNX via naviseccli and Control Station; every change goes through a gated, approved change plan. |
 | `managing-ecs-objectscale-production` | Dell ECS / ObjectScale object storage (S3). Read-only Management API (System Monitor) and config-only S3 reads, no secrets in transcripts; every change goes through a gated, approved change plan. |
 | `managing-ibm-cos-production` | IBM Cloud Object Storage on-prem (Cleversafe dsNet). Read-only Manager API and config-only S3 reads, IDA margin math before any device work; every change goes through a gated, approved change plan. |
+| `managing-docker-production` | Docker Engine, images, Dockerfiles, Compose. Daemon access treated as root; prune/volume/`down -v` gated as T3; image and runtime hardening audit. Commands checked against the Docker CLI 29.10, Compose v5.6.1 and Buildx v0.38.1 references. |
+| `managing-kubernetes-production` | Kubernetes and Helm. `--context` on every command, diff and server dry-run before applies, PV reclaim-policy checks before PVC/namespace deletes (array volumes), PDB-safe drains, version-skew upgrades. Commands checked against kubectl v1.37 and Helm 3 references. |
+| `managing-terraform-production` | Terraform: saved-plan workflow, state and locking safety, `moved`/`removed` blocks, drift, provider upgrades, storage providers (NetApp ONTAP, Dell PowerMax, Dell ObjectScale). Commands checked against the Terraform 1.17 CLI reference. |
+| `managing-cicd-gitops-production` | CI/CD pipeline security (pinned actions, OIDC, least-privilege tokens, `pull_request_target` risks) and GitOps with Argo CD and Flux (prune, cascade delete, rollback, suspend). Commands checked against Argo CD 3.7.0 and Flux 2.9.6. |
+| `managing-observability-production` | Prometheus, Alertmanager, Icinga 2 and Dynatrace: narrow silences/downtimes with expiry, config validation before reloads, irreversible deletes gated. Checked against Prometheus 3.15.1, Alertmanager 0.34.1, Icinga 2 v2.16.5, Monaco 2.31.0 and Dynatrace API v2 docs. |
 
 ## How the skills work
 
@@ -82,6 +87,11 @@ Every skill follows the same model:
 | `managing-unity-vnx-production` (CLI) | Dell *Unity Family Unisphere CLI User Guide* **5.5.5** (302-002-578 Rev. A19, Sept 2026); *EMC VNX CLI Reference for Block* **5.33** (300-015-135 Rev. 08, Mar 2020); Unity *Upgrading Unity Software* (H14977), *Security Configuration Guide* 5.1, *Configuring High Availability* (H16708): public Dell PDFs | Retrieved **2026-10-25** | uemcli catalog (420 documented forms) and naviseccli catalog with page refs; invented forms removed (`/remote/initiator delete`, `/sys/soft/upgrade`, `-curowner`). VNX File (`nas_*`) commands still unverified: no public File CLI reference. |
 | `managing-ecs-objectscale-production` | Dell *ObjectScale Best Practices* white paper **H16016.15** (Sept 2026, Dell Info Hub) | Retrieved **2026-10-25** | Create-time-only settings, capacity thresholds, replication/ADO, accounts, Object Lock, LB/TLS. ECS/ObjectScale admin guides and REST API reference need a Dell support login, so Management API paths are still `[unverified]`. |
 | `managing-ibm-cos-production` | IBM *Cloud Object Storage System Release Notes* **3.17.2** (ClevOS 3.17.2.40) and **3.15.4** (public IBM downloads) | Retrieved **2026-10-25** | Manager API operation names, upgrade rules, product alerts, known issues. The Manager Administration Guide and REST API Developer Guide aren't public. |
+| `managing-docker-production` | docker/cli `docs/reference/commandline` (**Docker 29.10.0**), docker/compose `docs/reference` (**v5.6.1**), docker/buildx `docs/reference` (**v0.38.1**); docs.docker.com build best practices, build secrets, engine security, live restore, logging | Retrieved **2026-10-25** | Generated command catalogs (`scripts/gen_cli_catalogs.py`): command and flag names only. |
+| `managing-kubernetes-production` | kubernetes/website (**v1.37** docs: kubectl generated reference, Persistent Volumes, Disruptions, Version Skew Policy, RBAC Good Practices, kubeadm upgrade); helm/helm-www `docs/helm` (**Helm 3**) and CRD best practices | Retrieved **2026-10-25** | kubectl and helm catalogs generated. CSI-driver and distribution-specific commands are `[unverified]`. |
+| `managing-terraform-production` | hashicorp/web-unified-docs **Terraform v1.17.x** (CLI commands, lifecycle, moved/removed/import blocks, state, locking); Terraform Registry provider metadata | Retrieved **2026-10-25** | Catalog generated. Provider resource arguments are `[unverified]` until checked in the provider docs. |
+| `managing-cicd-gitops-production` | argoproj/argo-cd docs (**3.7.0**: command reference, auto-sync, app deletion, upgrading); fluxcd/flux2 CLI source (**v2.9.6**) and kustomize-controller Kustomization spec; GitHub Docs *Secure use reference* for Actions | Retrieved **2026-10-25** | Pipeline YAML keywords aren't catalogued (`[unverified]`). |
+| `managing-observability-production` | prometheus/prometheus docs (**3.15.1**: promtool, HTTP API, management API); prometheus/alertmanager (**0.34.1** README and amtool source); Icinga/icinga2 docs (**v2.16.5**: CLI, REST API, upgrading); docs.dynatrace.com API v2 pages (auth, problems, metrics, settings); Dynatrace/dynatrace-configuration-as-code (**Monaco 2.31.0** source) | Retrieved **2026-10-25** | Dynatrace settings schema IDs and DQL are `[unverified]`. |
 
 When a newer vendor documentation release comes out, re-verify the skill against it and update this table. For NetApp, re-run the command cross-check against the new PDF and refresh `ontap-versions-and-defaults.md`.
 
@@ -103,6 +113,11 @@ ln -s ~/infra-skills/managing-powermax-production ~/.claude/skills/managing-powe
 ln -s ~/infra-skills/managing-unity-vnx-production ~/.claude/skills/managing-unity-vnx-production
 ln -s ~/infra-skills/managing-ecs-objectscale-production ~/.claude/skills/managing-ecs-objectscale-production
 ln -s ~/infra-skills/managing-ibm-cos-production ~/.claude/skills/managing-ibm-cos-production
+ln -s ~/infra-skills/managing-docker-production ~/.claude/skills/managing-docker-production
+ln -s ~/infra-skills/managing-kubernetes-production ~/.claude/skills/managing-kubernetes-production
+ln -s ~/infra-skills/managing-terraform-production ~/.claude/skills/managing-terraform-production
+ln -s ~/infra-skills/managing-cicd-gitops-production ~/.claude/skills/managing-cicd-gitops-production
+ln -s ~/infra-skills/managing-observability-production ~/.claude/skills/managing-observability-production
 ```
 
 ### OpenCode
@@ -117,6 +132,11 @@ ln -s ~/infra-skills/managing-powermax-production ~/.config/opencode/skills/mana
 ln -s ~/infra-skills/managing-unity-vnx-production ~/.config/opencode/skills/managing-unity-vnx-production
 ln -s ~/infra-skills/managing-ecs-objectscale-production ~/.config/opencode/skills/managing-ecs-objectscale-production
 ln -s ~/infra-skills/managing-ibm-cos-production ~/.config/opencode/skills/managing-ibm-cos-production
+ln -s ~/infra-skills/managing-docker-production ~/.config/opencode/skills/managing-docker-production
+ln -s ~/infra-skills/managing-kubernetes-production ~/.config/opencode/skills/managing-kubernetes-production
+ln -s ~/infra-skills/managing-terraform-production ~/.config/opencode/skills/managing-terraform-production
+ln -s ~/infra-skills/managing-cicd-gitops-production ~/.config/opencode/skills/managing-cicd-gitops-production
+ln -s ~/infra-skills/managing-observability-production ~/.config/opencode/skills/managing-observability-production
 ```
 
 Optional: control skill access in `opencode.json`:
@@ -228,7 +248,9 @@ The repository is MIT-licensed, except these third-party files (licence and attr
 - `managing-powermax-production/references/powermax-api/spec/openapi.json`: Dell Unisphere for PowerMax spec from dell/PyU4V, **Apache-2.0**
 - `managing-unity-vnx-production/references/unity-api/spec/unity_openapi.json`: community conversion of Dell's Unity REST reference from sachdev27/dell-unity-mcp-server, **MIT** (unofficial; not a Dell publication)
 
-The generated `endpoints.md`, `areas/` and `models.md` next to them are derived from those files. The full ONTAP / ASA r2 swagger is NetApp copyright and is **not** in this repository: `scripts/gen_api_docs.py` generates it on your machine into `*-api-local/` folders, which `.gitignore` excludes. Don't commit or redistribute them.
+The generated `endpoints.md`, `areas/` and `models.md` next to them are derived from those files.
+
+The DevOps `*-command-catalog.md` files list only command and flag **names** extracted from the projects' official references: Docker CLI, Compose and Buildx docs (Apache-2.0), Kubernetes documentation (CC BY 4.0, © The Kubernetes Authors), Helm docs (helm/helm-www, MIT), Argo CD docs (Apache-2.0), Flux CLI source (Apache-2.0), Terraform docs (HashiCorp), Prometheus/Alertmanager (Apache-2.0), Icinga 2 docs (Icinga/icinga2, GPL-3.0 repository) and Dynatrace Monaco source (Apache-2.0). Each catalog names its source version and files; the official documentation remains authoritative. The full ONTAP / ASA r2 swagger is NetApp copyright and is **not** in this repository: `scripts/gen_api_docs.py` generates it on your machine into `*-api-local/` folders, which `.gitignore` excludes. Don't commit or redistribute them.
 
 ## Repository layout
 
@@ -241,6 +263,8 @@ scripts/lint_skills.py            frontmatter, references, shared copies, README
 scripts/gen_api_docs.py           generate a REST API reference from an OpenAPI / Swagger spec
                                   (Pure, PowerMax, Unity: committed; ONTAP, ASA: *-api-local/, git-ignored)
 scripts/gen_ontap_catalog_docs.py generate the read-only ONTAP reference from the ontap-mcp catalog
+scripts/gen_cli_catalogs.py       generate DevOps CLI catalogs (docker, kubectl, helm, terraform, argocd, flux, promtool, icinga2, monaco)
+scripts/check_cli_flags.py        fail CI if a DevOps skill uses a flag missing from its catalogs
 tests/                            pressure scenarios and pass criteria per skill
 .github/workflows/                lint + skills-count badge
 ```
