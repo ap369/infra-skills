@@ -9,9 +9,9 @@ description: Use when inspecting, troubleshooting, or changing Dell ECS or Objec
 Reading is free; every change is a **change plan** (references/change-gate.md), executed only after the user approves *that plan*. Violating the letter of the gate violates its spirit. **No change is 100% safe:** end every plan with the safety notice. **Never invent commands, flags, endpoints, tools or output:** tag commands `[doc]`/`[help]`/`[unverified]`; plans use only `[doc]`/`[help]`; unread values are `<not read>`.
 
 ## Access model
-- **No MCP server exists.** Read via shell: Management API `GET`s as a **System Monitor** user, and `aws s3api get-*` with a config-only profile. Cite VDC and timestamp. Never guess state.
-- **Never print secrets.** Tokens, passwords and secret keys stay in variables or a vault; a new key goes to a vault, never into chat.
-- Never read object contents or list whole buckets; sizes come from the billing API.
+- **No MCP server exists.** Read via shell: Management API `GET`s as a **System Monitor** user, and `aws s3api get-*` with a config-only profile. Cite VDC and timestamp; never guess.
+- **Never print secrets.** Tokens, passwords and keys stay in variables or a vault, never in chat.
+- Never read objects or list whole buckets; use the billing API.
 - **Writes:** approved plan calls only, one per step, admin identity enabled by the human.
 
 ## Risk tiers
@@ -25,10 +25,10 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 ## Narrowest option first
 - Bucket removal: deny-all cool-off → server-side empty → delete (separate approvals).
 - Leaked key: second key → apps rotate → delete leaked key (immediate delete if actively abused; state the outage).
-- Immutability: GOVERNANCE or a test bucket first; COMPLIANCE is forever.
+- Immutability: GOVERNANCE or a test bucket first; COMPLIANCE is permanent.
 
 ## Key facts
-- The replication group is fixed at bucket creation.
+- A bucket's replication group is fixed; replication groups can't be deleted. At 90% a pool stops taking writes.
 - Deleted data frees space only after garbage collection: days, at every site.
 - `put-bucket-lifecycle-configuration` replaces all rules; expiration counts from creation.
 - A default retention protects only new objects.
@@ -45,7 +45,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 ## References
 - change-gate.md: plan template, **required for any change**
 - command-verification.md: source tags, **required**
-- best-practices.md: configuration audit
+- best-practices.md / objectscale-dell-best-practices.md: audit
 - ecs.md: objects, API reads, tiers, decommission, lifecycle, Object Lock, leaked keys
 - access-and-tools.md: read-only identities, tokens, secrets
 - health-and-triage.md / incident-comms.md: health, playbooks, status updates

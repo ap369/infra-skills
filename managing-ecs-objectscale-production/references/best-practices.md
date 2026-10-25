@@ -22,7 +22,7 @@ Report format: **# | Practice | Current value | Status (OK / GAP / N/A) | Risk |
 
 | # | Practice | Why | Check | Fix tier |
 |---|---|---|---|---|
-| E7 | Storage pools **< 75–80%** used, with headroom for GC, erasure coding and node-failure rebuild | Writes can stall at high fill | `/dashboard/zones/localzone`, `/object/capacity` | plan |
+| E7 | Storage pools **< 80%** used (Dell H16016: at **90% the pool stops accepting writes**), capacity added **before 85%**, headroom for GC, EC, rebuild and site outage | Writes can stall at high fill | `/dashboard/zones/localzone`, `/object/capacity` | plan |
 | E8 | GC healthy (reclaimable space draining) | Capacity | GC metrics | report |
 | E9 | **Quotas** (namespace and bucket) on multi-tenant systems, with soft-quota alerts | Noisy tenants | namespace and bucket quota | T2 |
 | E10 | A load balancer in front of data nodes (health checks on 9021/9020), with no clients pinned to one node's IP | Availability | LB config | network |
