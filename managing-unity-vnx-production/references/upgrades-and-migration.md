@@ -7,7 +7,7 @@ Use with references/upgrade-checklist.md (generic gates) and references/change-g
 
 ## Unity OE upgrades
 - **How:**
-  - the Unisphere upgrade wizard (or `uemcli /sys/soft/upgrade`)
+  - the Unisphere upgrade wizard (or `uemcli -upload -f <file> upgrade`, then `/sys/general healthcheck`, then `/sys/upgrade create -type software`: see unity-command-catalog.md)
   - the **pre-upgrade health check** runs first and must be clean
   - the SPs reboot one at a time (non-disruptive when hosts multipath to both SPs)
   - drive firmware is a separate bundle

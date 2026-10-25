@@ -1,9 +1,11 @@
 # Unity / Unity XT reference (Unisphere, uemcli, REST)
 
-> **Command verification status:** this skill hasn't been checked against Dell Unity/VNX documentation yet. **Every uemcli, naviseccli and nas_* command here is `[unverified]`** until confirmed on the target with `-help` (see command-verification.md). Treat them as pointers to the right command family, not exact syntax.
+> **Command verification status:** uemcli object paths and actions here were checked against Dell's *Unisphere CLI User Guide* **5.5.5** (Sept 2026). Paths and actions listed in unity-command-catalog.md are `[doc]`; qualifiers are `[doc]` only where that catalog or the guide's Format line shows them. Confirm qualifiers on the target with `-help` (older OE). Anything else is `[unverified]`.
 
 
-Syntax drifts between OE versions. Confirm with `uemcli -d <mgmt> <object> -help` before putting a command in a change plan.
+Syntax drifts between OE versions. Confirm with `uemcli -d <mgmt> <object> <action> -help` before putting a command in a change plan.
+
+**Never use `-lunHosts` to add or remove one host:** it replaces the LUN's whole host list, and any host left out loses access (guide p. 393). Use `-addHosts` / `-removeHosts`. **Never use `-silent` in a change** (it skips confirmations).
 
 ## Object model
 
@@ -34,7 +36,8 @@ uemcli -d <mgmt> /prot/snap show -detail               # source, creation, creat
 uemcli -d <mgmt> /prot/rep/session show -detail
 uemcli -d <mgmt> /remote/host show -detail ; /remote/initiator show
 uemcli -d <mgmt> /net/nas/server show ; /stor/prov/fs/nfs show ; /stor/prov/fs/cifs show
-uemcli -d <mgmt> /metrics/value/rt -path sp.*.storage.lun.*.responseTime show   # check the path names with -help
+uemcli -d <mgmt> /metrics/metric show                     # list valid metric paths first
+uemcli -d <mgmt> /metrics/value/rt -path <path from metric list> show -interval <sec>
 ```
 REST: `https://<mgmt>/api/types/<type>/instances?fields=...` (pool, lun, filesystem, snap, replicationSession, alert, host).
 
@@ -44,16 +47,16 @@ REST: `https://<mgmt>/api/types/<type>/instances?fields=...` (pool, lun, filesys
 |---|---|---|---|
 | T1 | Snapshot | `/prot/snap create -source <res_id> -name CHG123 -keepFor 7d` | delete it |
 | T1 | Create LUN / FS / share / host | `/stor/prov/luns/lun create ...` | delete (unused) |
-| T1 | Grant host access to a new LUN | `/stor/prov/luns/lun -id X set -lunHosts ...` | remove: T3 once used |
+| T1 | Grant host access to a new LUN | `/stor/prov/luns/lun -id X set -addHosts <host>` (incremental) | remove: T3 once used |
 | T2 | Expand LUN / FS | `... -id X set -size <bigger>` | no shrink for LUNs |
-| T2 | Pool expansion | `/stor/config/pool -name P extend -drivesNumber ...` | **can't remove drives:** permanent capacity commitment |
+| T2 | Pool expansion | `/stor/config/pool -name P extend -diskGroup <dg> -drivesNumber <n>` | **can't remove drives:** permanent capacity commitment |
 | T2 | Snapshot schedule / pool auto-delete thresholds / host I/O limit | `set ...` | previous values recorded |
 | T2 | Replication pause / resume / sync | `/prot/rep/session -id X pause` | resume. DR is paused meanwhile. |
-| T3 | Delete snapshot | `/prot/snap -id X delete` | **NONE** |
-| T3 | Snapshot restore | `/prot/snap -id X restore [-backupName ...]` | data written after the snapshot is lost. Always keep a backup snapshot. |
-| T3 | Remove host access / initiator / delete host | `set -lunHosts ...`, `/remote/initiator -id X delete` | re-add. The host outage happens in between. |
-| T3 | Delete LUN / FS / datastore / NAS server | `... -id X delete` | **NONE** |
-| T3 | Replication failover / failback / delete session | `/prot/rep/session -id X failover` | DR runbook only |
+| T3 | Delete snapshot | `/prot/snap -id X delete` (never `-overrideLock` without the owning app team) | **NONE** |
+| T3 | Snapshot restore | `/prot/snap -id X restore -backupName CHG123_pre` | the system snapshots the current state first (`-backupName`); hosts must stop I/O, attached snapshots detached first |
+| T3 | Remove host access / delete host | `/stor/prov/luns/lun -id X set -removeHosts <host>`, `/remote/host -id X delete` | re-add. The host outage happens in between. (There is no documented `/remote/initiator ... delete`.) |
+| T3 | Delete LUN / FS / datastore / NAS server | `... -id X delete` (`-deleteSnapshots yes` also deletes its snapshots; default `no`) | **NONE** |
+| T3 | Replication failover / failback / delete session | planned: on the source `/prot/rep/session -id X failover -sync yes`; unplanned (possible data loss): on the destination `... failover` | DR runbook only |
 | T3 | OE upgrade, SP reboot/service mode, drive/pool removal | Dell support / NDU procedure | n/a |
 
 ## Pool full: relief ranked by safety

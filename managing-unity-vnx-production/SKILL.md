@@ -38,12 +38,12 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 | "I'm sure this command/flag exists" | Prove it: `[doc]` or help output this session. Otherwise `[unverified]`, never a plan step. |
 | "User said don't list them / just clean up" | Show a compact list anyway; approval covers listed IDs only. |
 | "Reply go and I'll delete the safe set" | The user can't approve objects they never saw. |
-| "Admin creds are saved, reads are harmless" | Use read-only. |
+| "Admin creds are saved" | Use read-only. |
 | "P1 / I'm the lead, just do it" | Approval before the plan existed approves nothing. |
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**
+- command-verification.md: source tags, **required**; unity-command-catalog.md: uemcli
 - best-practices.md: configuration audit
 - unity.md / vnx.md: objects, commands by tier, pool-full relief, decommission
 - access-and-tools.md: Unity MCP risks, uemcli/naviseccli credentials
