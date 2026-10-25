@@ -49,5 +49,6 @@ Margin = available devices − write threshold, for **every vault** on the set, 
 - best-practices.md: configuration audit
 - ibm-cos.md: IDA, objects, tiers, maintenance, retention
 - access-and-tools.md: Read Only identities, Manager API, secrets
-- health-and-triage.md / incident-comms.md: health, playbooks, status updates
+- health-and-triage.md / incident-comms.md: health, playbooks, updates
 - upgrade-checklist.md / upgrades-and-migration.md: ClevOS upgrades, migration
+- ibm-cos-release-facts.md: release notes
