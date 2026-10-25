@@ -43,7 +43,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**; unity-command-catalog.md / vnx-command-catalog.md
+- command-verification.md / itsm-and-pam.md: **required**; unity-command-catalog.md / vnx-command-catalog.md
 - best-practices.md: configuration audit
 - unity.md / vnx.md: objects, commands by tier, pool-full relief, decommission
 - access-and-tools.md / unity-security-and-upgrades.md: credentials, roles, upgrades

@@ -43,7 +43,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**
+- command-verification.md / itsm-and-pam.md: **required**
 - docker-command-catalog.md / compose-command-catalog.md / buildx-command-catalog.md: [doc] forms
 - docker.md: images, runtime safety, volumes, registries, tiers
 - best-practices.md: configuration audit

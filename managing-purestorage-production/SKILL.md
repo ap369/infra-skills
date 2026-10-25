@@ -43,7 +43,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**; purity-command-catalog.md: [doc] forms
+- command-verification.md / itsm-and-pam.md: **required**; purity-command-catalog.md: [doc] forms
 - activecluster-and-activedr.md / purity-versions-and-security.md: from Everpure docs
 - best-practices.md: configuration audit
 - flasharray.md / flashblade.md: objects, commands by tier, decommission

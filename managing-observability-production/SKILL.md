@@ -43,7 +43,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**
+- command-verification.md / itsm-and-pam.md: **required**
 - promtool-command-catalog.md / icinga2-command-catalog.md / monaco-command-catalog.md: [doc] forms
 - prometheus.md / icinga.md / dynatrace.md: APIs, safe changes, tiers
 - best-practices.md: configuration audit

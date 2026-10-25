@@ -45,7 +45,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**
+- command-verification.md / itsm-and-pam.md: **required**
 - kubectl-command-catalog.md / helm-command-catalog.md: [doc] forms
 - kubernetes.md: objects, reads, tiers, storage and CSI, RBAC, decommission
 - best-practices.md: configuration audit

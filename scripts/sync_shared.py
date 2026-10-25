@@ -25,7 +25,7 @@ def expected_gate(core: str, current: str) -> str:
 def main() -> int:
     check = "--check" in sys.argv
     core = (ROOT / "shared/change-gate-core.md").read_text()
-    whole_files = {name: (ROOT / "shared" / name).read_text() for name in ("incident-comms.md", "upgrade-checklist.md", "command-verification.md")}
+    whole_files = {name: (ROOT / "shared" / name).read_text() for name in ("incident-comms.md", "upgrade-checklist.md", "command-verification.md", "itsm-and-pam.md")}
     stale = []
     for skill in sorted(ROOT.glob("managing-*")):
         refs = skill / "references"

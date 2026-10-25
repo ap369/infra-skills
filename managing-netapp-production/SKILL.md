@@ -43,7 +43,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**
+- command-verification.md / itsm-and-pam.md: **required**
 - ontap-command-catalog.md: [doc] forms
 - ontap-versions-and-defaults.md / ontap-security-and-ransomware.md: versions, defaults, ARP, MAV, JIT
 - best-practices.md: configuration audit

@@ -44,7 +44,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**
+- command-verification.md / itsm-and-pam.md: **required**
 - terraform-command-catalog.md: [doc] forms
 - terraform.md: workflow, state, locking, lifecycle, storage providers, tiers
 - best-practices.md: configuration audit

@@ -45,7 +45,7 @@ Margin = available devices − write threshold, for **every vault** on the set, 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**
+- command-verification.md / itsm-and-pam.md: **required**
 - best-practices.md: configuration audit
 - ibm-cos.md: IDA, objects, tiers, maintenance, retention
 - access-and-tools.md: Read Only identities, Manager API, secrets

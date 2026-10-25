@@ -43,7 +43,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**; symcli-command-catalog.md: [doc] forms
+- command-verification.md / itsm-and-pam.md: **required**; symcli-command-catalog.md: [doc] forms
 - snapvx-and-srdf.md / powermax-security-and-versions.md: Dell docs
 - best-practices.md: configuration audit
 - powermax-vmax.md: objects, tiers, decommission, SRDF recovery

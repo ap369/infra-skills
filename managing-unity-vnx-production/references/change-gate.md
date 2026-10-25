@@ -5,9 +5,9 @@ Every change above T0 is delivered as this document, filled in completely. Nothi
 ```markdown
 ## Change plan: <one-line summary>
 **Target:** <system name>: <serial / SID / cluster UUID>, role <PROD | DR | TEST>, site <site>, <model, OS/code version>
-**Tier:** T1 | T2 | T3   **Ticket:** <id or "none, user to supply">   **Requested by:** <user>
+**Tier:** T1 | T2 | T3   **Ticket:** <ServiceNow CHG number + state read live (itsm-and-pam.md) | "none, user to supply">   **Requested by:** <user>
 **Window:** <now | date/time, timezone>. Freeze calendar: <checked, no freeze | emergency exception: reason>
-**Executor:** <Claude via CLI/API/MCP, one step at a time | human>
+**Executor:** <Claude via CLI/API/MCP, one step at a time | human>; credentials: <CyberArk Safe/account, PSM or human checkout for the window, never the password>
 
 ### 1. Current state (evidence)
 | Check | Value | Source + timestamp |
@@ -48,6 +48,7 @@ T3:    "Reply with the object name(s) exactly, `<name>`, to approve the irrevers
 ```
 
 ## Rules for filling it in
+- **ServiceNow and CyberArk (references/itsm-and-pam.md):** cite the ServiceNow change request and its state, read live (never invented, never assumed approved), and keep to its window. Write access comes from CyberArk: PSM or a human checkout for the window, with the CHG as the ticket. The agent never retrieves or prints a password. The last steps end the PSM session or check the account in, and draft the CHG work notes.
 - **Command source (mandatory):** every step's command is tagged `[doc]` or `[help]` (see references/command-verification.md). An `[unverified]` command never appears as a step. Add a T0 "verify syntax" step that runs the help command, then re-issue the plan. Every value in section 1 comes from a read in this session. Unread values are written `<not read>`, never estimated.
 - **Safety notice (mandatory):** every change plan ends with the safety notice from section 7, word for word, including emergency-path plans. Never describe a change as "safe", "zero risk" or "guaranteed". State the residual risk instead.
 - **Approval is scoped to this plan.** "Go ahead", "do it now", "whatever it takes", "I approve", or a title ("I'm the manager") said *before* the plan existed approves nothing. It tells you the user wants speed, so make the plan short. It doesn't let you skip it.

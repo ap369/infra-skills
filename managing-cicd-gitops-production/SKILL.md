@@ -44,7 +44,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 
 ## References
 - change-gate.md: plan template, **required for any change**
-- command-verification.md: source tags, **required**
+- command-verification.md / itsm-and-pam.md: **required**
 - argocd-command-catalog.md / flux-command-catalog.md: [doc] forms
 - cicd-gitops.md: pipeline security, Argo CD, Flux, rollback, tiers
 - best-practices.md: configuration audit
