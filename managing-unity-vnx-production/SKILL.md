@@ -46,7 +46,7 @@ Reading is free; every change is a **change plan** (references/change-gate.md), 
 - command-verification.md: source tags, **required**; unity-command-catalog.md / vnx-command-catalog.md
 - best-practices.md: configuration audit
 - unity.md / vnx.md: objects, commands by tier, pool-full relief, decommission
-- access-and-tools.md: Unity MCP risks, uemcli/naviseccli credentials
+- access-and-tools.md / unity-security-and-upgrades.md: credentials, roles, upgrades
 - health-and-triage.md / incident-comms.md: health, playbooks, status updates
 - upgrade-checklist.md / upgrades-and-migration.md: OE upgrades, VNX exit
 - unity-api/: Unity REST API, Python
